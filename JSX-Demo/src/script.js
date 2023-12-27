@@ -17,13 +17,24 @@ const root = ReactDOM.createRoot(roomDomElement);
 //  reactSecondHeading,
 // );
 
-const headerJSX = (
-  <header className='site-header'>
-    <h1>Hello from JSX!</h1>
-    <h2>The best syntax ever!</h2>
+const Footer = () => (
+  <div className='site-footer'>
+    <p>All right reserved &copy;</p>
+  </div>
+)
 
-    <p>something else here</p>
-  </header>
+
+const headerJSX = (
+  <div>
+    <header className='site-header'>
+      <h1>Hello from JSX!</h1>
+      <h2>The best syntax ever!</h2>
+
+      <p>something else here</p>
+    </header>
+
+    <Footer />
+  </div>
 );
 
 root.render(headerJSX);

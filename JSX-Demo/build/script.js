@@ -16,7 +16,7 @@ var root = ReactDOM.createRoot(roomDomElement);
 //  reactSecondHeading,
 // );
 
-var headerJSX = React.createElement(
+var body = React.createElement(
   'header',
   { className: 'site-header' },
   React.createElement(
@@ -36,4 +36,4 @@ var headerJSX = React.createElement(
   )
 );
 
-root.render(headerJSX);
+root.render(body);
