@@ -5,35 +5,41 @@ var roomDomElement = document.getElementById('root');
 
 var root = ReactDOM.createRoot(roomDomElement);
 
-// const reactHeadingElement = React.createElement('h1', {}, 'Hello from JSX!');
+function Footer() {
+  return React.createElement(
+    'div',
+    { className: 'site-footer' },
+    React.createElement(
+      'p',
+      null,
+      'All right reserved \xA9'
+    )
+  );
+}
 
-// const reactSecondHeading = React.createElement('h2', {}, "The best syntax ever!");
-
-// const header = React.createElement(
-//   'header',
-//  { className:'site-header'},
-//  reactHeadingElement,
-//  reactSecondHeading,
-// );
-
-var body = React.createElement(
-  'header',
-  { className: 'site-header' },
+var headerJSX = React.createElement(
+  'div',
+  null,
   React.createElement(
-    'h1',
-    null,
-    'Hello from JSX!'
+    'header',
+    { className: 'site-header' },
+    React.createElement(
+      'h1',
+      null,
+      'Hello from JSX!'
+    ),
+    React.createElement(
+      'h2',
+      null,
+      'The best syntax ever!'
+    ),
+    React.createElement(
+      'p',
+      null,
+      'something else here'
+    )
   ),
-  React.createElement(
-    'h2',
-    null,
-    'The best syntax ever!'
-  ),
-  React.createElement(
-    'p',
-    null,
-    'something else here'
-  )
+  React.createElement(Footer, null)
 );
 
-root.render(body);
+root.render(headerJSX);

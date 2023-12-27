@@ -6,22 +6,14 @@ const roomDomElement = document.getElementById('root');
 
 const root = ReactDOM.createRoot(roomDomElement);
 
-// const reactHeadingElement = React.createElement('h1', {}, 'Hello from JSX!');
 
-// const reactSecondHeading = React.createElement('h2', {}, "The best syntax ever!");
-
-// const header = React.createElement(
-//   'header',
-//  { className:'site-header'},
-//  reactHeadingElement,
-//  reactSecondHeading,
-// );
-
-const Footer = () => (
-  <div className='site-footer'>
-    <p>All right reserved &copy;</p>
-  </div>
-)
+function Footer() {
+  return (
+    <div className='site-footer'>
+      <p>All right reserved &copy;</p>
+    </div>
+  )
+}
 
 
 const headerJSX = (

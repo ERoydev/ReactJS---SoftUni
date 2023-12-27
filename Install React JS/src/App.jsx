@@ -12,19 +12,12 @@ function App() {
     <div>
       <>
       <Header />
-
       <OurServices />
-  
       <About />
-
       <MobileApp />
-
       <Automatic />
-
       <ClientSection />
-
       <Info />
-
       <Footer />
     </>
 
