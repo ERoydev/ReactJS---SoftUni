@@ -13,8 +13,15 @@ export default function VideoComponent () {
         controls={false}
       >
         <source src={mainVideo} type="video/mp4" />
-        Your browser does not support the video tag.
       </video>
+
+       <div className="overlay">
+        <div className="textContainer">
+          <h2>Looking for a Job? We've Made It Easier for You.</h2>
+          <p>Jobs Available in Every Region of Our Country</p>
+          <button className='search'>Search for a Job</button>
+        </div>
+      </div>
     </div>
   );
 };
