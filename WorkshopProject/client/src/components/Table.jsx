@@ -3,11 +3,14 @@ import * as userApi from "../services/userApi";
 import { useEffect, useState } from "react";
 import CreateUserModal from "./createUserModal";
 import UserDetailsModal from "./userDetailsModal";
+import UserDeleteModal from "./UserDeleteModal";
 
 export default function Table() {
   const [users, setUsers] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showDelete, setShowDelete] = useState(false);
 
   useEffect(() => {
     userApi.getAll()
@@ -33,13 +36,24 @@ export default function Table() {
     setShowCreate(false);
   };
 
-  const userShowDetailsClickHandler = () => {
-    setShowDetails(true);
+  const userShowDetailsClickHandler = async (userId) => {
+    setSelectedUser(userId);
+    setShowDetails(true);    
+  };
+
+  const userDeleteGetInfo = async (userId) => {
+    setSelectedUser(userId);
+    setShowDelete(true);
   }
 
-  const hideUserDetailsModal = () => {
-    setShowDetails(false);
+  const userDeleteClickHandler = async () => {
+    await userApi.deleteUser(selectedUser);
+
+    setUsers(state => state.filter(user => user._id !== selectedUser));
+
+    setShowDelete(false);
   }
+
 
   return(
     <div className="table-wrapper">
@@ -48,14 +62,22 @@ export default function Table() {
       (<CreateUserModal
           hideModal={hideCreateUserModal}
           onUserCreate={userCreateHandler}
-
        />)}
 
        {
        showDetails &&
        (<UserDetailsModal
-          hideModal={hideUserDetailsModal}
+          hideModal={() => setShowDetails(false)}
+          userId={selectedUser}
+          
         />
+       )}
+
+       {showDelete && (
+        <UserDeleteModal 
+          hideModal={() => setShowDelete(false)}
+          deleteUser={userDeleteClickHandler}
+          />
        )}
 
       <table className="table">
@@ -161,6 +183,7 @@ export default function Table() {
               key={user._id} 
               {...user}
               userDetails={userShowDetailsClickHandler}
+              deleteUser={userDeleteGetInfo}
             />
           ))}
         </tbody>

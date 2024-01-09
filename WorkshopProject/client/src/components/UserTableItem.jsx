@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { formatDate } from "../utils/dateUtils";
 
 const UserTableItem = ({
+  _id,
   firstName,
   lastName,
   email,
@@ -8,8 +10,18 @@ const UserTableItem = ({
   createdAt,
   imageUrl,
   userDetails,
+  deleteUser
 
 }) => {
+
+  const deleteClickHandler = () => {
+    deleteUser(_id);
+  }
+
+  const infoClickHandler = () => {
+    userDetails(_id);
+  }
+  
   return(
          <tr>
             <td>
@@ -42,7 +54,7 @@ const UserTableItem = ({
                   ></path>
                 </svg>
               </button>
-              <button className="btn delete-btn" title="Delete">
+              <button className="btn delete-btn" title="Delete" onClick={deleteClickHandler}>
                 <svg
                   aria-hidden="true"
                   focusable="false"
@@ -59,7 +71,7 @@ const UserTableItem = ({
                   ></path>
                 </svg>
               </button>
-              <button className="btn info-btn" title="Info" onClick={userDetails}>
+              <button className="btn info-btn" title="Info" onClick={infoClickHandler}>
                 <svg
                   aria-hidden="true"
                   focusable="false"
