@@ -7,6 +7,7 @@ const UserTableItem = ({
   phoneNumber,
   createdAt,
   imageUrl,
+  userDetails,
 
 }) => {
   return(
@@ -58,7 +59,7 @@ const UserTableItem = ({
                   ></path>
                 </svg>
               </button>
-              <button className="btn info-btn" title="Info">
+              <button className="btn info-btn" title="Info" onClick={userDetails}>
                 <svg
                   aria-hidden="true"
                   focusable="false"

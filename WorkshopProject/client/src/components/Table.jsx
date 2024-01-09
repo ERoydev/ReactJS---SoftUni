@@ -1,17 +1,62 @@
 import UserTableItem from "./UserTableItem";
 import * as userApi from "../services/userApi";
 import { useEffect, useState } from "react";
+import CreateUserModal from "./createUserModal";
+import UserDetailsModal from "./userDetailsModal";
 
 export default function Table() {
   const [users, setUsers] = useState([]);
+  const [showCreate, setShowCreate] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     userApi.getAll()
       .then(result => setUsers(result))
-  }, [])
+      .catch(err => console.log(err)) 
+  }, []);
+
+  const createUserClickHandler = () => {
+    setShowCreate(true);
+  };
+
+  const hideCreateUserModal = () => {
+    setShowCreate(false);
+  };
+
+  const userCreateHandler = async (e) => {
+    e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const newUser = await userApi.create(data);
+
+    setUsers(state => [...state, newUser]);
+    setShowCreate(false);
+  };
+
+  const userShowDetailsClickHandler = () => {
+    setShowDetails(true);
+  }
+
+  const hideUserDetailsModal = () => {
+    setShowDetails(false);
+  }
 
   return(
     <div className="table-wrapper">
+      {
+      showCreate && 
+      (<CreateUserModal
+          hideModal={hideCreateUserModal}
+          onUserCreate={userCreateHandler}
+
+       />)}
+
+       {
+       showDetails &&
+       (<UserDetailsModal
+          hideModal={hideUserDetailsModal}
+        />
+       )}
 
       <table className="table">
         <thead>
@@ -115,10 +160,16 @@ export default function Table() {
             <UserTableItem
               key={user._id} 
               {...user}
+              userDetails={userShowDetailsClickHandler}
             />
           ))}
         </tbody>
       </table>
+
+      <button className="btn-add btn" onClick={createUserClickHandler}>Add new user</button>
+    
     </div>
+ 
+
   );
 }

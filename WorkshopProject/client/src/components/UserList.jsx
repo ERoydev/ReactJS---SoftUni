@@ -9,8 +9,6 @@ const UserList = () => {
 
       <Table />
   
-      <button className="btn-add btn">Add new user</button>
-
       <Pagination />
     
   </section>
