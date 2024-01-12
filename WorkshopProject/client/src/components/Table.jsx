@@ -72,10 +72,14 @@ export default function Table() {
     setShowEdit(false);
     setUserData(null);
 
-    setUsers()
-
-    console.log(users)
-    console.log(newData._id)
+    setUsers(prevUser => {
+      return prevUser.map(user => {
+        if(user._id == newData._id) {
+          return {...user, ...newData}
+        }
+        return user
+      })
+    })
   }
 
 
