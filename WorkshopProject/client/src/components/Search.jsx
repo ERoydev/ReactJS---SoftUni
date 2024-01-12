@@ -1,4 +1,14 @@
-export default function Search() {
+
+export default function Search({
+  searchData,
+}) {
+
+  const searchClickHandler = (e) => {
+    e.preventDefault();
+    const searchText = document.querySelector('input[name="search"]');
+    searchData(searchText.value);
+  }
+
   return(
      <form className="search-form">
       <h2>
@@ -29,7 +39,7 @@ export default function Search() {
         <button className="btn close-btn">
           <i className="fa-solid fa-xmark" />
         </button>
-        <button className="btn" title="Please, select the search criteria">
+        <button className="btn" title="Please, select the search criteria" onClick={searchClickHandler}>
           <i className="fa-solid fa-magnifying-glass" />
         </button>
       </div>

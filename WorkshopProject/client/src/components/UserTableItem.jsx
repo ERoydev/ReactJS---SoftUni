@@ -10,9 +10,14 @@ const UserTableItem = ({
   createdAt,
   imageUrl,
   userDetails,
-  deleteUser
+  deleteUser,
+  editUser,
 
 }) => {
+
+  const editClickHandler = () => {
+    editUser(_id)
+  }
 
   const deleteClickHandler = () => {
     deleteUser(_id);
@@ -37,7 +42,7 @@ const UserTableItem = ({
             <td>{phoneNumber}</td>
             <td>{formatDate(createdAt)}</td>
             <td className="actions">
-              <button className="btn edit-btn" title="Edit">
+              <button className="btn edit-btn" title="Edit" onClick={editClickHandler}>
                 <svg
                   aria-hidden="true"
                   focusable="false"

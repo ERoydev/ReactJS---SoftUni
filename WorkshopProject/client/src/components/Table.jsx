@@ -4,18 +4,25 @@ import { useEffect, useState } from "react";
 import CreateUserModal from "./createUserModal";
 import UserDetailsModal from "./userDetailsModal";
 import UserDeleteModal from "./UserDeleteModal";
+import Spinner from "./Spinner";
+import EditUserModal from "./EditUserModal";
 
 export default function Table() {
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showDelete, setShowDelete] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [userData, setUserData] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     userApi.getAll()
       .then(result => setUsers(result))
       .catch(err => console.log(err)) 
+      .finally(() => setIsLoading(false))
   }, []);
 
   const createUserClickHandler = () => {
@@ -50,8 +57,25 @@ export default function Table() {
     await userApi.deleteUser(selectedUser);
 
     setUsers(state => state.filter(user => user._id !== selectedUser));
-
     setShowDelete(false);
+  }
+
+  const editGetInfo = async (userId) => {
+    setSelectedUser(userId);
+    const data = await userApi.getOne(userId);
+    setUserData(data);
+    setShowEdit(true);
+  }
+
+  const editClickHandler = (e, newData) => {
+    e.preventDefault();
+    setShowEdit(false);
+    setUserData(null);
+
+    setUsers()
+
+    console.log(users)
+    console.log(newData._id)
   }
 
 
@@ -77,6 +101,18 @@ export default function Table() {
         <UserDeleteModal 
           hideModal={() => setShowDelete(false)}
           deleteUser={userDeleteClickHandler}
+          />
+       )}
+
+       {isLoading && (
+        <Spinner />
+       )}
+
+       {showEdit && (
+        <EditUserModal 
+          hideModal={() => setShowEdit(false)}
+          editUser={editClickHandler}
+          user={userData}
           />
        )}
 
@@ -184,6 +220,7 @@ export default function Table() {
               {...user}
               userDetails={userShowDetailsClickHandler}
               deleteUser={userDeleteGetInfo}
+              editUser={editGetInfo}
             />
           ))}
         </tbody>

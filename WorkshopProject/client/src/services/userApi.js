@@ -54,3 +54,13 @@ export const deleteUser = async (userId) => {
     }
   })
 }
+
+export const edit = async(userId, data) => {
+  const response = await fetch(`${baseUrl}/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+}
