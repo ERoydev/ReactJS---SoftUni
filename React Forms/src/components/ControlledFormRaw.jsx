@@ -1,36 +1,29 @@
 import { useState } from "react";
 
+const formInitialState = {
+    username: '',
+    password: '',
+    age: '',
+}
+
 export default function ControlledForm() {
 
-    const [usernameValue, setUsernameValue] = useState('');
-    const [passwordValue, setPasswordValue] = useState('');
-    const [ageValue, setAgeValue] = useState('');
+    const [formState, setFormState] = useState(formInitialState);
     
-    const usernameChangeHandler = (e) => {
-        setUsernameValue(e.target.value);
-    }
-
-    const passwordChangeHandler = (e) => {
-        setPasswordValue(e.target.value);
-    }
-
-    const ageChangeHandler = (e) => {
-        setAgeValue(e.target.value);
+    const changeHandler = (e) => {
+        setFormState(state => ({
+            ...state,
+            [e.target.name]: e.target.value,
+        }))
     }
 
     const resetFormHandler = () => {
-        setUsernameValue('');
-        setPasswordValue('');
-        setAgeValue('');
-    }
-
-    const usernameBlurHandler = () => {
-        console.log('on blur')
+        setFormState(formInitialState);
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log(usernameValue, passwordValue, ageValue)
+        console.log(formState)
         resetFormHandler();
     }
 
@@ -44,25 +37,24 @@ export default function ControlledForm() {
                     <input type="text"
                      name="username"
                      id="username" 
-                     value={usernameValue}
-                     onChange={usernameChangeHandler} 
-                     onBlur={usernameBlurHandler}/>
+                     value={formState.username}
+                     onChange={changeHandler} />
                 </div>
                 <div>
                     <label htmlFor="username">Password:</label>
                     <input type="password"
                      name="password"
                      id="password"
-                     value={passwordValue}
-                     onChange={passwordChangeHandler}/>
+                     value={formState.password}
+                     onChange={changeHandler}/>
                 </div>
                 <div>
                     <label htmlFor="username">Age:</label>
                     <input type="number"
                      name="age"
                      id="age" 
-                     value={ageValue}
-                     onChange={ageChangeHandler}/>
+                     value={formState.age}
+                     onChange={changeHandler}/>
                 </div>
                 <div>
                     <button>Register</button>
