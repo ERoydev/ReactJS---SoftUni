@@ -85,10 +85,34 @@ export default function Table({
     })
   }
 
+  const criteriaFilter = () => {
+    if(searchCriteria == "First name") {
+      const sortedUsers = [...users].sort((a, b) => a.firstName.localeCompare(b.firstName))
+      setUsers(sortedUsers);
+    }
+
+    if(searchCriteria == "Last name") {
+      const sortedUsers = [...users].sort((a, b) => a.lastName.localeCompare(b.lastName))
+      setUsers(sortedUsers);
+    }
+
+    if(searchCriteria == "Email") {
+      const sortedUsers = [...users].sort((a, b) => a.email.localeCompare(b.email))
+      setUsers(sortedUsers);
+    }
+
+    if(searchCriteria == "Phone") {
+      const sortedUsers = [...users].sort((a, b) => a.phoneNumber.localeCompare(b.phoneNumber))
+      setUsers(sortedUsers);
+    }
+  }
+
   const criteriaClickHandler = (e) => {
+    const clickedCriteria = e.target.textContent;
     e.preventDefault();
-    setSearchCriteria(e.target.textContent);
-    criteriaSelector(e.target.textContent);
+    setSearchCriteria(clickedCriteria);
+    criteriaSelector(clickedCriteria);
+    criteriaFilter();
   }
 
 
