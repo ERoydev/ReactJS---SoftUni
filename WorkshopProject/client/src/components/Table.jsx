@@ -7,7 +7,9 @@ import UserDeleteModal from "./UserDeleteModal";
 import Spinner from "./Spinner";
 import EditUserModal from "./EditUserModal";
 
-export default function Table() {
+export default function Table({
+  criteriaSelector,
+}) {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
@@ -16,6 +18,7 @@ export default function Table() {
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [userData, setUserData] = useState(false);
+  const [searchCriteria, setSearchCriteria] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -82,6 +85,12 @@ export default function Table() {
     })
   }
 
+  const criteriaClickHandler = (e) => {
+    e.preventDefault();
+    setSearchCriteria(e.target.textContent);
+    criteriaSelector(e.target.textContent);
+  }
+
 
   return(
     <div className="table-wrapper">
@@ -124,7 +133,7 @@ export default function Table() {
         <thead>
           <tr>
             <th>Image</th>
-            <th>
+            <th onClick={criteriaClickHandler}>
               First name
               <svg
                 aria-hidden="true"
@@ -142,7 +151,7 @@ export default function Table() {
                 ></path>
               </svg>
             </th>
-            <th>
+            <th onClick={criteriaClickHandler}>
               Last name
               <svg
                 aria-hidden="true"
@@ -160,7 +169,7 @@ export default function Table() {
                 ></path>
               </svg>
             </th>
-            <th>
+            <th onClick={criteriaClickHandler}> 
               Email
               <svg
                 className="icon"
@@ -178,7 +187,7 @@ export default function Table() {
                 ></path>
               </svg>
             </th>
-            <th>
+            <th onClick={criteriaClickHandler}>
               Phone
               <svg
                 aria-hidden="true"

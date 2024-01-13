@@ -1,13 +1,22 @@
+import { useEffect } from "react";
 
 export default function Search({
   searchData,
+  criteria,
+  assignCriteria,
 }) {
+
+  useEffect(() => {
+    const options = document.querySelector('.filter .criteria');
+    options.value = criteria;
+  }, [criteria])
 
   const searchClickHandler = (e) => {
     e.preventDefault();
     const searchText = document.querySelector('input[name="search"]');
     searchData(searchText.value);
   }
+
 
   return(
      <form className="search-form">
@@ -46,11 +55,11 @@ export default function Search({
       <div className="filter">
         <span>Search Criteria:</span>
         <select name="criteria" className="criteria">
-          <option value="">Not selected</option>
-          <option value="">First Name</option>
-          <option value="">Last Name</option>
-          <option value="">Email</option>
-          <option value="">Phone</option>
+          <option value="null">Not selected</option>
+          <option value="First name">First Name</option>
+          <option value="Last name">Last Name</option>
+          <option value="Email">Email</option>
+          <option value="Phone">Phone</option>
         </select>
       </div>
     </form>
