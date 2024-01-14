@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import styles from './ControlledForm.module.css';
 
 const formInitialState = {
     username: '',
@@ -15,11 +16,24 @@ export default function ControlledForm({
 }) {
 
     const usernameInputRef = useRef();
+    const isMountedRef = useRef(false);
     const [formState, setFormState] = useState(formInitialState);
-    
+    const [errors, setErrors] = useState({});
+
     useEffect(() => {
         usernameInputRef.current.focus();
     }, [])
+
+    // Executes only on update
+
+    useEffect(() => {
+        if(!isMountedRef.current) {
+            isMountedRef.current = true;
+            return;
+        }
+
+        console.log('Form is updated')
+    }, [formState]);
 
     const changeHandler = (e) => {
         setFormState(state => ({
@@ -45,6 +59,39 @@ export default function ControlledForm({
         }))
     }
 
+    const ageValidator = (e) => {
+
+        if (formState.age < 0 || formState.age > 120) {
+            setErrors(state => ({
+                ...state,
+                age: 'Age should be between 0 and 120'
+            }));
+        } else {
+            if (errors.age) {
+                setErrors(state => ({
+                    ...state,
+                    age: ''
+                }));
+            }
+        }
+    }
+
+    const passwordValidator = (e) => {
+        if (formState.password.length <= 10) {
+            setErrors(state => ({
+                ...state,
+                password: 'Password should be longer than 10 symbols'
+            }))
+        } else {
+            if (errors.password) {
+                setErrors(state => ({
+                    ...state,
+                    password: ''
+                }));
+            }
+        }
+    }
+
     return (
         <>
             <h1>Controlled Form</h1>
@@ -65,7 +112,12 @@ export default function ControlledForm({
                      name="password"
                      id="password"
                      value={formState.password}
-                     onChange={changeHandler}/>
+                     onChange={changeHandler}
+                     onBlur={passwordValidator}
+                     />
+                     {errors.password && (
+                        <p className={styles.errorMessage}>{errors.password}</p>
+                     )}
                 </div>
                 <div>
                     <label htmlFor="username">Age:</label>
@@ -73,7 +125,13 @@ export default function ControlledForm({
                      name="age"
                      id="age" 
                      value={formState.age}
-                     onChange={changeHandler}/>
+                     onChange={changeHandler}
+                     onBlur={ageValidator}
+                     className={errors.age && styles.inputError}
+                     />
+                     {errors.age && (
+                        <p className={styles.errorMessage}>{errors.age}</p>
+                     )}
                 </div>
                 <div>
                     <label htmlFor="gender">Gender</label>
