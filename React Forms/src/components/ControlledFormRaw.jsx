@@ -44,6 +44,7 @@ export default function ControlledForm({
 
     const resetFormHandler = () => {
         setFormState(formInitialState);
+        setErrors({});
     }
 
     const submitHandler = (e) => {
@@ -154,7 +155,7 @@ export default function ControlledForm({
                 </div>
 
                 <div>
-                    <button type="submit">Register</button>
+                    <button type="submit" disabled={Object.values(errors).some(x => x)}>Register</button>
                     <button type="button" onClick={resetFormHandler}>Reset</button>
                     
                 </div>
