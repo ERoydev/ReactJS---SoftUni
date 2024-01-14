@@ -4,6 +4,10 @@ const formInitialState = {
     username: '',
     password: '',
     age: '',
+    gender: '',
+    swimming: false,
+    boxing: false,
+    running: false,
 }
 
 export default function ControlledForm() {
@@ -25,6 +29,13 @@ export default function ControlledForm() {
         e.preventDefault();
         console.log(formState)
         resetFormHandler();
+    }
+
+    const onCheckboxChange = (e) => {
+        setFormState(state => ({
+            ...state,
+            [e.target.name]: e.target.checked
+        }))
     }
 
     return (
@@ -56,6 +67,26 @@ export default function ControlledForm() {
                      value={formState.age}
                      onChange={changeHandler}/>
                 </div>
+                <div>
+                    <label htmlFor="gender">Gender</label>
+                    <select name="gender" id="gender" value={formState.gender} onChange={changeHandler}>
+                        <option value="f">F</option>
+                        <option value="M">M</option>
+                    </select>
+                </div>
+
+                <div>
+                    <h3>Hobbies</h3>
+                    <label htmlFor="swimming">Swimming</label>
+                    <input type="checkbox" name="swimming" id="swimming" checked={formState.swimming} onChange={onCheckboxChange} />
+
+                    <label htmlFor="boxing">Boxing</label>
+                    <input type="checkbox" name="boxing" id="boxing" checked={formState.boxing} onChange={onCheckboxChange} />
+
+                    <label htmlFor="running">Running</label>
+                    <input type="checkbox" name="running" id="running" checked={formState.running} onChange={onCheckboxChange}/>
+                </div>
+
                 <div>
                     <button>Register</button>
                     <button type="button" onClick={resetFormHandler}>Reset</button>
