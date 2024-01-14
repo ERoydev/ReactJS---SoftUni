@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const formInitialState = {
     username: '',
@@ -10,10 +10,17 @@ const formInitialState = {
     running: false,
 }
 
-export default function ControlledForm() {
+export default function ControlledForm({
+    formRef,
+}) {
 
+    const usernameInputRef = useRef();
     const [formState, setFormState] = useState(formInitialState);
     
+    useEffect(() => {
+        usernameInputRef.current.focus();
+    }, [])
+
     const changeHandler = (e) => {
         setFormState(state => ({
             ...state,
@@ -42,10 +49,11 @@ export default function ControlledForm() {
         <>
             <h1>Controlled Form</h1>
 
-            <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler} ref={formRef}>
                 <div>
                     <label htmlFor="username">Username:</label>
                     <input type="text"
+                    ref={usernameInputRef}
                      name="username"
                      id="username" 
                      value={formState.username}
@@ -88,8 +96,9 @@ export default function ControlledForm() {
                 </div>
 
                 <div>
-                    <button>Register</button>
+                    <button type="submit">Register</button>
                     <button type="button" onClick={resetFormHandler}>Reset</button>
+                    
                 </div>
             </form>
         </>
