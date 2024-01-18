@@ -16,10 +16,10 @@ export default function VideoComponent () {
       </video>
 
        <div className="overlay">
-        <div className="textContainer">
-          <h2>Looking for a Job? We've Made It Easier for You.</h2>
-          <p>Jobs Available in Every Region of Our Country</p>
-          <button className='search'>Search for a Job</button>
+        <div className="caption">
+          <h6>Looking for a Job</h6>
+            <h2>Find the perfect <em>Job</em></h2>
+          <button className='main-button'>Search for a Job</button>
         </div>
       </div>
     </div>

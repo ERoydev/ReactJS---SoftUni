@@ -1,0 +1,35 @@
+
+.navbar-container {
+    display: flex;
+    gap: 2em;
+}
+
+.logo {
+    text-decoration: none;
+    color: rgb(223, 223, 223);
+}
+
+.navigation {
+    padding-top: 1em;
+    background-color: #202731;
+}
+
+.offcanvas-body {
+    background-color: #0e1111;
+}
+
+.navbar-menu {
+    padding: 0.7em 1em;
+    border-radius: 15px;
+    background-color: #202731;
+    color: rgb(223, 223, 223);
+    border: none;
+}
+
+.navbar-menu:hover {
+    background-color: #cacaca33;
+}
+
+.offcanvas-body {
+    padding: 0!important;
+}

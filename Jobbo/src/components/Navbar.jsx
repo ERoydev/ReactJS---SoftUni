@@ -1,4 +1,5 @@
 import '../static/Navbar.css'
+import Jobs from './Jobs';
 
 export default function Navbar() {
   return (
