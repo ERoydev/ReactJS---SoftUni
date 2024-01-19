@@ -8,7 +8,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
   background-color: #202731;
-  width: 1200px;
+  width: 1000px;
   margin: 0 auto;
 }
 
@@ -23,7 +23,7 @@ a:hover {
 
 
 h1 {
-  font-size: 3.2em;
+  font-size: 3.0em;
   line-height: 1.1;
 }
 
