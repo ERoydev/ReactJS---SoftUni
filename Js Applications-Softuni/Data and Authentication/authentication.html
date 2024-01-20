@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="error">
+
+    </div>
+
+    <form method="POST" id="register">
+        <input type="text" name="email" />
+        <input type="password" name="password" />
+        <input type="password" name="repass" />
+        <input type="submit" value="Register" />
+    </form>
+
+    <h3>Login Form</h3>
+    <form method="POST" id="login">
+        <input type="text" name="email" />
+        <input type="password" name="password" />
+        <input type="submit" value="Login" />
+    </form>
+
+    <script>
+        const errorField = document.querySelector('.error');
+        const baseUrl = "http://localhost:3030";
+        const registerForm = document.querySelector('#register');
+        const loginForm = document.querySelector('#login');
+
+        registerForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.currentTarget);
+
+            const { email, password, repass } = Object.fromEntries(formData.entries()); 
+
+            if (password == repass) {
+                fetch(`${baseUrl}/users/register/`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password,
+                    })
+                })
+                    .then(res => {
+                        if(res.status == 200) {
+                            return res.json();
+                        } else {
+                            throw new Error(res.status)
+                        }
+                    })
+                    .then(data => console.log(data))
+                    .catch(err => console.log(err))
+                registerForm.reset();
+
+            } else {
+                const msg = document.createElement('p');
+                msg.textContent = "Passwords do not match";
+                msg.style.color='red';
+                errorField.appendChild(msg);
+            }
+        })
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.currentTarget);
+
+            const { email, password } = Object.fromEntries(formData.entries());
+            let data = '';
+
+            try {
+                const response = await fetch(`http://localhost:3030/users/login`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password,
+                    }),
+                });
+                data = await response.json();
+                localStorage.setItem("user", data.accessToken);
+
+            } catch {
+                console.log(data.message)
+            }
+
+            loginForm.reset();
+        })
+
+        
+    </script>
+</body>
+</html>
