@@ -13,8 +13,13 @@ async function loginUser (userData) {
         }),
     })
     const data = await response.json();
-    localStorage.setItem('token', data.accessToken);
-    window.location.pathname = '/Data%20and%20Authentication/CookBoook/base/index.html';
+    if(data.accessToken !== undefined) {
+        localStorage.setItem('token', data.accessToken);
+         window.location.pathname = '/Data%20and%20Authentication/CookBoook/base/index.html';
+    } else {
+        console.log('no such user')
+    }
+   
 };
 
 form.addEventListener('submit', (e) => {
