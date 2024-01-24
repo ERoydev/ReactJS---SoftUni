@@ -38,9 +38,7 @@ form.addEventListener('submit', async (e) => {
             grade: data.grade,
         })
     })
-
     onLoadData();
-    
 })
 
 

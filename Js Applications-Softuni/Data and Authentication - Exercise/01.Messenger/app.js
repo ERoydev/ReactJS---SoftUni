@@ -7,8 +7,6 @@ function attachEvents() {
         const name = document.querySelector("input[name='author']").value;
         const message = document.querySelector("input[name='content']").value;
 
-        console.log(name, message)
-
         const response = await fetch('http://localhost:3030/jsonstore/messenger', {
             method: "POST",
             headers: {
