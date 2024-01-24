@@ -4,6 +4,7 @@ const greetingBar = document.querySelector('nav p span');
 const logoutBtn = document.querySelector('#logout');
 const catches = document.querySelector('#catches');
 const loadBtn = document.querySelector('.load');
+const addBtn = document.querySelector('.add');
 
 const CatchesUrl = 'http://localhost:3030/data/catches';
 
@@ -19,6 +20,7 @@ function onLoad() {
         guestBar.style.display='none';
         userBar.style.display='inline-block';  
         greetingBar.textContent = sessionStorage.getItem('email');
+        addBtn.disabled = false;
 
     }
 }
@@ -54,6 +56,7 @@ async function getAllCatches() {
 }
 
 function generateCatches(data) {
+    console.log(data);
     const div = document.createElement('div');
     div.classList.add('catch');
     div.innerHTML = `
@@ -69,8 +72,38 @@ function generateCatches(data) {
             <input type="text" class="bait" value="${data.bait}">
             <label>Capture Time</label>
             <input type="number" class="captureTime" value="${data.captureTime}">
-            <button class="update" data-id="07f260f4-466c-4607-9a33-f7273b24f1b4">Update</button>
-            <button class="delete" data-id="07f260f4-466c-4607-9a33-f7273b24f1b4">Delete</button>
+            <button class="update" data-id="${data._id}" disabled>Update</button>
+            <button class="delete" data-id="${data._id}" disabled>Delete</button>
     `;
+
+    if(data._ownerId === sessionStorage.getItem('userId')) {
+        const btns = div.querySelectorAll('button');
+        Array.from(btns).forEach(x => x.disabled = false)
+    }
     return div;
 }
+
+addBtn.addEventListener('click', async(e) => {
+    e.preventDefault();
+    const addForm = document.querySelector('#addForm');
+
+    const formData = new FormData(addForm);
+    
+    const response = await fetch(CatchesUrl, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': sessionStorage.getItem('token'),
+        },
+        body: JSON.stringify({
+            angler: formData.get('angler'),
+            weight: formData.get('weight'),
+            species: formData.get('species'),
+            location: formData.get('location'),
+            bait: formData.get('bait'),
+            captureTime: formData.get('captureTime'),
+        })
+    });
+
+    loadBtn.click();
+})
