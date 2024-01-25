@@ -51,7 +51,7 @@ function solve() {
     const rePass = formData.get('rePass');
 
 
-    if (!email || !password || !rePass || passwod !== rePass) {
+    if (!email || !password || !rePass || password !== rePass) {
       throw new Error("missing fields or wrong password");
 
     } else {
