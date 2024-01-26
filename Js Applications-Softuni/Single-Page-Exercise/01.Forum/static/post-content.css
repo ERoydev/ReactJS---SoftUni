@@ -1,0 +1,19 @@
+.topic-title {
+    padding: 0;
+    border: 1px solid rgba(179, 179, 179, 0.603);
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.topic-title h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 5px;
+    border-bottom: 1px dotted rgba(179, 179, 179, 0.603);
+    padding-top: 8px;
+}
+
+.topic-title:hover {
+    background-color: rgba(128, 128, 128, 0.082);
+    cursor: pointer;
+}
