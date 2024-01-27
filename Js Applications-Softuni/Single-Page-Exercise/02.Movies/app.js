@@ -80,17 +80,23 @@ async function homePage() {
     movieList.innerHTML = '';
         movies.forEach((x) => {
         const li = document.createElement('li');
-        li.classList.add('movie-list-item')
+        li.classList.add('movie-list-item');
+        li.setAttribute('id', x._id);
         const div = document.createElement('div');
 
         const p = document.createElement('p');
         const button = document.createElement('button');
+        
+        const desc = document.createElement('span');
+        desc.textContent = 'Read more in details...'
         button.textContent = "Details";
         button.classList.add('movie-list-button')
+        button.addEventListener('click', movieDetails)
 
         p.innerHTML = `<strong>${x.title}</strong>`;
         li.innerHTML = `<img src="${x.img}" class="movie-img" />`;
         li.appendChild(p);
+        li.appendChild(desc)
         div.appendChild(button);
         li.appendChild(div);
         movieList.appendChild(li);
@@ -153,3 +159,119 @@ function addMovie(e) {
 
 
 }
+
+async function movieDetails(e) {
+    e.preventDefault();
+    const movieExampleSection = document.querySelector('#movie-example');
+    hideAllSections();
+    movieExampleSection.style.display='block';
+    const movieId = e.target.parentNode.parentNode.id;
+
+
+    const response = await fetch(`http://localhost:3030/data/movies/${movieId}`);
+    const data = await response.json();
+
+    if (sessionStorage.getItem('userId') === data._ownerId) {
+        const el = `
+    <div class="container">
+          <div class="row bg-light text-dark">
+            <h1>Movie title: ${data.title}</h1>
+
+            <div class="col-md-8">
+              <img
+                class="img-thumbnail"
+                src="${data.img}"
+                alt="Movie"
+              />
+            </div>
+            <div class="col-md-4 text-center">
+              <h3 class="my-3">Movie Description</h3>
+              <p>
+                ${data.description}
+              </p>
+              <a class="btn btn-danger" href="#">Delete</a>
+              <a class="btn btn-warning editBtn" href="#">Edit</a>
+            </div>
+          </div>
+          `
+        movieExampleSection.innerHTML = el;
+
+        const deleteBtn = document.querySelector('.btn-danger');
+        deleteBtn.addEventListener('click', async (e) => {
+            const response = await fetch(`http://localhost:3030/data/movies/${movieId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Authorization": sessionStorage.getItem("token"),
+                }
+            })
+
+            window.location.href='./index.html';
+        });
+
+        const editBtn = document.querySelector('.editBtn');
+
+        editBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const editSection = document.querySelector('#edit-movie');
+            hideAllSections();
+            editSection.style.display='block';
+            const form = document.querySelector('.editMovie');
+
+            const titleField = document.querySelector('form.editMovie input[name="title"]');
+            const descriptionField = document.querySelector('form.editMovie textarea[name="description"]');
+            const imgField = document.querySelector('form.editMovie input[name="img"]');
+
+            titleField.value = data.title;
+            descriptionField.value = data.description;
+            imgField.value = data.img;
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const title = formData.get('title');
+                const description = formData.get('description');
+                const img = formData.get('img');
+                
+                const response = await fetch(`http://localhost:3030/data/movies/${movieId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Authorization": sessionStorage.getItem("token"),
+                    },
+                    body: JSON.stringify({
+                        title,
+                        description,
+                        img,
+                    })
+                })
+                window.location.href="./index.html";
+            })
+        })
+
+    } else {
+        const el = `
+    <div class="container">
+          <div class="row bg-light text-dark">
+            <h1>Movie title: ${data.title}</h1>
+
+            <div class="col-md-8">
+              <img
+                class="img-thumbnail"
+                src="${data.img}"
+                alt="Movie"
+              />
+            </div>
+            <div class="col-md-4 text-center">
+              <h3 class="my-3">Movie Description</h3>
+              <p>
+                ${data.description}
+              </p>
+            </div>
+          </div>
+          `
+        movieExampleSection.innerHTML = el;
+    }
+}
+
