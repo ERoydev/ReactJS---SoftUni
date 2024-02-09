@@ -1,0 +1,3 @@
+return const appTemplate = () => {
+    return ();
+}

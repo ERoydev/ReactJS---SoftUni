@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.html",
   "scripts": {
-    "test": "mocha tests",
+    "test": "mocha",
     "start": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1"
   },
   "author": "",
@@ -13,9 +13,9 @@
     "page": "^1.11.6"
   },
   "devDependencies": {
-    "chai": "4.3.4",
+    "chai": "^4.3.4",
     "http-server": "0.12.3",
-    "mocha": "8.3.2",
+    "mocha": "^8.3.2",
     "playwright-chromium": "^1.9.2"
   }
 }

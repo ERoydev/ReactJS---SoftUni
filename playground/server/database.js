@@ -8,20 +8,33 @@ const pool = new Pool({
     database: "verbsphere"
 })
 
-const createTblQry = `CREATE TABLE words (
-    id serial PRIMARY KEY,
-    username VARCHAR ( 50 ) UNIQUE NOT NULL,
-    word VARCHAR ( 50 ) UNIQUE NOT NULL,
-    description VARCHAR ( 250 ) UNIQUE NOT NULL);`
+const getWords = (request, response) => {
+    
+}
 
-pool.query(createTblQry)
-    .then((Response) => {
-        console.log("Table Created")
-        console.log(Response)
-    })
-    .catch((err) => {
+// const addWord = (request, response) => {
+//     const username = request.body["username"]
+//     const word = request.body["word"]
+//     const description = request.body["description"]
 
-        console.log(err)
-    })
+//     console.log(word)
+//     console.log(description)
 
-module.exports = pool;
+//     const insertSTMT = `INSERT INTO words ( username, word, description ) VALUES ( '${username}', '${word}', '${description}' );`
+
+//     pool.query(insertSTMT)
+//         .then((response) => {
+//             console.log("Data Saved")
+//             console.log(response)
+//         })
+//         .catch((err) => {
+//             console.log(err)
+//         })
+
+//     console.log(response.body)
+//     response.send("Response Received: " + response.body) 
+// }
+
+module.exports = {
+    getWords,
+}
