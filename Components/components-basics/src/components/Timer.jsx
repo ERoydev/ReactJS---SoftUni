@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export default function Timer(props) {
   const [time, setTime] = useState(props.startTime); // Pass initial state
-  // let time = 0;
+  // let time = 1;
 
   setTimeout(() => {
     setTime(time + 1);

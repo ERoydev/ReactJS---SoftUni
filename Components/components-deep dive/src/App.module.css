@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.number-list {
+.numberList {
 
 }
 
@@ -16,4 +16,5 @@
 
 .listItem:hover {
   background-color: lightblue;
+  cursor: pointer;
 }
