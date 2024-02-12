@@ -1,36 +1,17 @@
-import Search from "./Search";
-import Table from "./Table";
-import Pagination from "./Pagination";
-import { useState } from "react";
+import { useState } from 'react';
+import Search from './Search';
+import UserListTable from './UserListTable';
 
 const UserList = () => {
-  const [criteria, assignCriteria] = useState(null);
 
-  const searchDataHandler = (value) => {
-    console.log(value)
-  }
+    return (
+        <section className="card users-container">
 
-  const criteriaSelector = (selected) => {
-    assignCriteria(selected)
-  }
+            <Search />
 
-  return(
-    <section className="card users-container">
-      <Search 
-        searchData={searchDataHandler}
-        criteria={criteria}
-        assignCriteria={assignCriteria}
-      />
-
-      <Table 
-        criteriaSelector={criteriaSelector}
-      />
-  
-      <Pagination />
-    
-  </section>
-  );
+            <UserListTable />
+        </section>
+    );
 }
 
-
-export default UserList;
+export default UserList

@@ -1,12 +1,11 @@
-
 export default function Header() {
-  return (
+    return (
     <header className="navigation-header">
         <span className="navigation-logo">
-          <img src="images/todo-icon.png" alt="todo-logo" />
+            <img src="images/todo-icon.png" alt="todo-logo" />
         </span>
-        <span className="spacer"></span>
+        <span className="spacer" />
         <span className="navigation-description">Todo List</span>
-      </header>
-  );
+    </header>
+    );
 }

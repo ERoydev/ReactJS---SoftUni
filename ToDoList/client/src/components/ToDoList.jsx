@@ -1,32 +1,31 @@
-import ToDoItem from "./ToDoItem";
 import { useEffect, useState } from "react";
+import TodoItem from "./TodoItem";
 
-export default function ToDoList() {
-  const [todos, setTodos] = useState([]);
+export default function TodoList() {
+    const [todos, setTodos] = useState([]);
 
-  useEffect(() => {
-    fetch(`http://localhost:3030/jsonstore/todos`)
-      .then(res => res.json())
-      .then(data => {
-        setTodos(Object.values(data));
-      })
-      .catch(err => console.log(err));
-  }, [])
+    useEffect(() => {
+        fetch('http://localhost:3030/jsonstore/todos')
+            .then((response) => response.json())
+            .then((data) => setTodos(Object.values(data)))
+            .catch((err) => console.log(err))
+    }, [])
 
-  const changeStatusHandler = (todoId) => {
-    setTodos(state => state.map(todo => todo._id == todoId ? {...todo, isCompleted: !todo.isCompleted}: todo))
-  }
+    const onChangeStatusHandler = (todoId) => {
+        setTodos(state => state.map(todo => todo._id === todoId ? {...todo, isCompleted: !todo.isCompleted } : todo))
+    }
 
-  return (
+
+    return (
     <section className="todo-list-container">
           <h1>Todo List</h1>
-
           <div className="add-btn-container">
             <button className="btn">+ Add new Todo</button>
           </div>
 
           <div className="table-wrapper">
 
+            {/* Loading spinner - show the load spinner when fetching the data from the server*/}
             {/* <div className="loading-container">
               <div className="loading-spinner">
                 <span className="loading-spinner-text">Loading</span>
@@ -42,20 +41,20 @@ export default function ToDoList() {
                 </tr>
               </thead>
               <tbody>
-
+                
                 {todos.map(todo => (
-                  <ToDoItem 
-                    key={todo._id}
-                    _id={todo._id}
-                    text={todo.text}
-                    isCompleted={todo.isCompleted}
-                    changeStatusHandler={changeStatusHandler}
-                  />
+                    <TodoItem 
+                        key={todo._id}
+                        _id={todo._id} 
+                        text={todo.text} 
+                        status={todo.isCompleted}
+                        changeStatus={onChangeStatusHandler}
+                    />
                 ))}
 
               </tbody>
             </table>
           </div>
-        </section>
-  );
+    </section>
+    );
 }

@@ -1,5 +1,6 @@
 import styles from './App.module.css';
 import { useState, useEffect } from 'react';
+import Starwars from './Starwars';
 
 function App() {
   const [numbers, setNumbers] = useState([1, 2, 3, 4, 5]);
@@ -27,6 +28,9 @@ function App() {
 
   return (
     <div className={styles.h3}>
+
+      <Starwars />
+      
       <h3>Count: {count}</h3>
       <ul>
         {numbers.map((number, index) => 

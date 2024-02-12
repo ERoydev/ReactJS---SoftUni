@@ -1,21 +1,22 @@
-import Header from './components/Header'
-import Footer from './components/Footer'
-import ToDoList from './components/ToDoList'
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import TodoList from "./components/TodoList";
 
 function App() {
-
   return (
-    <div>
+    <>
       <Header />
-      
+
       <main className="main">
-        <ToDoList />
+
+        <TodoList />
+
       </main>
 
       <Footer />
-    </div>
+    </>
 
-  )
+  );
 }
 
 export default App
