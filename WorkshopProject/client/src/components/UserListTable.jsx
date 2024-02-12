@@ -1,6 +1,7 @@
-import UserListItem from "./UserListItem";
-import { useEffect, useState } from "react";
 import * as userApi from '../services/userApi.js';
+import { useEffect, useState } from "react";
+
+import UserListItem from "./UserListItem";
 import CreateUser from "./CreateUser.jsx";
 
 
@@ -24,25 +25,21 @@ const UserListTable = () => {
         setShowCreateModal(false);
     };;
 
-    const userCreateHandler = (e) => {
+    const userCreateHandler = async (e) => {
+        // Stop page from refreshing
         e.preventDefault();
-        const formData = new FormData(e.target);
 
-        const body = {
-            firstName: formData.get('firstName'),
-            lastName: formData.get('lastName'),
-            email: formData.get('email'),
-            phoneNumber: formData.get('phoneNumber'),
-            imageUrl: formData.get('imageUrl'),
-            createdAt: new Date(),
-            address: {
-                country: formData.get('country'),
-                city: formData.get('city'),
-                street: formData.get('street'),
-                streetNumber: formData.get('streetNumber'),
-            }
-        }
-        console.log('working')
+        // Get data from form data
+        const formData = new FormData(e.target);
+        
+        // Create new user at the server
+        const data = await userApi.createUser(formData);
+        
+        // Add newly created user to the local state to prerender
+        setUsers(oldState => [...oldState, data])
+
+        // Close the modal
+        setShowCreateModal(false);
     }
 
     
