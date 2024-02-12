@@ -23,11 +23,34 @@ const UserListTable = () => {
     const hideCreateUserModal = () => {
         setShowCreateModal(false);
     };;
+
+    const userCreateHandler = (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+
+        const body = {
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            email: formData.get('email'),
+            phoneNumber: formData.get('phoneNumber'),
+            imageUrl: formData.get('imageUrl'),
+            createdAt: new Date(),
+            address: {
+                country: formData.get('country'),
+                city: formData.get('city'),
+                street: formData.get('street'),
+                streetNumber: formData.get('streetNumber'),
+            }
+        }
+        console.log('working')
+    }
+
     
     return (
         <>
             {showCreateModal && <CreateUser
-                hideModal={hideCreateUserModal} />}
+                hideModal={hideCreateUserModal}
+                onUserCreate={userCreateHandler} />}
             
             <div className="table-wrapper">
                 <table className="table">

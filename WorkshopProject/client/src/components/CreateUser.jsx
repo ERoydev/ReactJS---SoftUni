@@ -1,31 +1,9 @@
-import * as userApi from '../services/userApi';
 
 const CreateUser = ({
     hideModal,
+    onUserCreate
 }) => {
 
-    const onSubmitHandler = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-
-        const body = {
-            firstName: formData.get('firstName'),
-            lastName: formData.get('lastName'),
-            email: formData.get('email'),
-            phoneNumber: formData.get('phoneNumber'),
-            imageUrl: formData.get('imageUrl'),
-            createdAt: new Date(),
-            address: {
-                country: formData.get('country'),
-                city: formData.get('city'),
-                street: formData.get('street'),
-                streetNumber: formData.get('streetNumber'),
-            }
-        }
-
-        userApi.CreateUser(body);
-        hideModal();
-    }
 
     return (
         <div className="overlay">
@@ -52,7 +30,7 @@ const CreateUser = ({
                     </svg>
                     </button>
                 </header>
-                <form onSubmit={onSubmitHandler}>
+                <form onSubmit={onUserCreate}>
                     <div className="form-row">
                     <div className="form-group">
                         <label htmlFor="firstName">First name</label>
