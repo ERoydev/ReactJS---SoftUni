@@ -3,11 +3,19 @@ import { useEffect, useState } from "react";
 
 import UserListItem from "./UserListItem";
 import CreateUser from "./CreateUser.jsx";
-
+import UserDetails from './UserDetails.jsx';
+import EditUser from './EditUser.jsx';
+import DeleteUser from './DeleteUser.jsx';
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
+
+    const [showDelete, setShowDelete] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [showDetailsModal, setShowDetailsModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    
+    const [tempData, setTempData] = useState([]);
 
 
     useEffect(() => {
@@ -17,13 +25,10 @@ const UserListTable = () => {
     }, []);
 
 
-    const createUserClickHandler = () => {
+    // CREATE
+    const showUserClickHandler = () => {
         setShowCreateModal(true);
     };
-
-    const hideCreateUserModal = () => {
-        setShowCreateModal(false);
-    };;
 
     const userCreateHandler = async (e) => {
         // Stop page from refreshing
@@ -40,14 +45,79 @@ const UserListTable = () => {
 
         // Close the modal
         setShowCreateModal(false);
+    };
+
+    // GET
+    const showDetailsClickHandler = async (_id) => {
+        const data = await userApi.getOne(_id);
+
+        setTempData(data);
+        setShowDetailsModal(true);
+    };
+
+    // EDIT
+    const showEditClickHandler = (_id) => {
+        const data = users.filter((user) => user._id === _id)[0];
+        
+        setTempData({...data, _id: _id});
+        setShowEditModal(true);
+    };
+    
+    const editUserHandler = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const data = {_id: tempData._id, ...Object.fromEntries(formData.entries())}
+        
+        userApi.editUser(data, data._id)
+        // const user = Object.values(users).find(usr => usr._id === data._id)
+        // const result = {...user, ...data};
+
+        console.log(users)
+        setShowEditModal(false);
+    }
+    
+    // DELETE
+    const showDeleteClickHandler = (_id) => {
+        setTempData(_id)
+        setShowDelete(true);
     }
 
+    const deleteUserHandler = async () => {
+        // Remove user from server
+        const result = await userApi.deleteUser(tempData);
+        
+        // Remove user from state
+        setUsers(state => state.filter(user => user._id !== tempData));
+        
+        // Close the delete modal
+        setShowDelete(false);
+    }
     
     return (
         <>
+
+            {showDelete && <DeleteUser 
+                hideModal={() => setShowDelete(false)}    
+                onDelete={deleteUserHandler}
+            />}
+
+            {showEditModal && <EditUser 
+                hideModal={() => setShowEditModal(false)}
+                editUserHandler={editUserHandler}
+                data={tempData}
+            />}
+
             {showCreateModal && <CreateUser
-                hideModal={hideCreateUserModal}
-                onUserCreate={userCreateHandler} />}
+                hideModal={() => setShowCreateModal(false)}
+                onUserCreate={userCreateHandler} 
+            />}
+
+            {showDetailsModal && <UserDetails 
+                hideModal={() => setShowDetailsModal(false)}
+                data={tempData}
+                />}
             
             <div className="table-wrapper">
                 <table className="table">
@@ -152,11 +222,14 @@ const UserListTable = () => {
                             <UserListItem 
                                 key={user._id} 
                                 {...user} 
+                                showDetails={showDetailsClickHandler}
+                                showEdit={showEditClickHandler}
+                                showDelete={showDeleteClickHandler}
                             />)}
                     </tbody>
                 </table>
 
-                <button className="btn-add btn" onClick={createUserClickHandler}>Add new user</button>
+                <button className="btn-add btn" onClick={showUserClickHandler}>Add new user</button>
             
             </div>
 

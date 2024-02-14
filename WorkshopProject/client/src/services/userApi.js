@@ -42,3 +42,46 @@ export const createUser = async (data) => {
     const result = response.json();
     return result
 }   
+
+export const editUser = async (data, _id) => {
+    const response = await fetch(`${baseUrl}/${_id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phoneNumber: data.phoneNumber,
+            imageUrl: data.imageUrl,
+            address: {
+                country: data.country,
+                city: data.city,
+                street: data.street,
+                streetNumber: data.streetNumber,
+            }
+        })
+    })
+
+    const result = await response.json();
+
+    return result;
+}
+
+export const getOne = async (_id) => {
+    const response = await fetch(`${baseUrl}/${_id}`)
+
+    const data = await response.json();
+
+    return data;
+}
+
+export const deleteUser = async (_id) => {
+    const response = await fetch(`${baseUrl}/${_id}`, {
+        method: 'DELETE',
+    }); 
+
+    const result = await response.json();
+    return result;
+}

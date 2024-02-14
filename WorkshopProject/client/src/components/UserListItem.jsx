@@ -1,4 +1,6 @@
 import { formatDate } from "./utils/dataUtils";
+import * as userApi from '../services/userApi';
+import { useEffect } from "react";
 
 const UserListItem = ({
     _id,
@@ -8,10 +10,22 @@ const UserListItem = ({
     phoneNumber,
     createdAt,
     imageUrl,
+    showDetails,
+    showEdit,
+    showDelete,
+
 }) => {
 
-    const detailsClickHandler = () => {
+    const editClickHandler = () => {
+        showEdit(_id);
+    }
 
+    const detailsClickHandler = () => {
+        showDetails(_id);
+    }
+
+    const deleteClickHandler = () => {
+        showDelete(_id);
     }
 
     return (
@@ -29,7 +43,7 @@ const UserListItem = ({
                 <td>{phoneNumber}</td>
                 <td>{formatDate(createdAt)}</td>
                 <td className="actions">
-                <button className="btn edit-btn" title="Edit">
+                <button className="btn edit-btn" title="Edit" onClick={editClickHandler}>
                     <svg
                     aria-hidden="true"
                     focusable="false"
@@ -46,7 +60,7 @@ const UserListItem = ({
                     ></path>
                     </svg>
                 </button>
-                <button className="btn delete-btn" title="Delete">
+                <button className="btn delete-btn" title="Delete" onClick={deleteClickHandler}>
                     <svg
                     aria-hidden="true"
                     focusable="false"
