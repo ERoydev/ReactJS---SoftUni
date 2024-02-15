@@ -50,11 +50,14 @@ export const editUser = async (data, _id) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
+            _id: data._id,
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
             phoneNumber: data.phoneNumber,
             imageUrl: data.imageUrl,
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
             address: {
                 country: data.country,
                 city: data.city,

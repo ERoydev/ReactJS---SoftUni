@@ -6,24 +6,28 @@ import CreateUser from "./CreateUser.jsx";
 import UserDetails from './UserDetails.jsx';
 import EditUser from './EditUser.jsx';
 import DeleteUser from './DeleteUser.jsx';
+import Spinner from './Spinner.jsx';
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [showDelete, setShowDelete] = useState(false);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
     
     const [tempData, setTempData] = useState([]);
 
 
     useEffect(() => {
+        setIsLoading(true);
+
         userApi.getAll()
             .then(res => setUsers(res))
             .catch(err => console.log(err))
+            .finally(() => setIsLoading(false));
     }, []);
-
 
     // CREATE
     const showUserClickHandler = () => {
@@ -56,25 +60,34 @@ const UserListTable = () => {
     };
 
     // EDIT
-    const showEditClickHandler = (_id) => {
-        const data = users.filter((user) => user._id === _id)[0];
-        
-        setTempData({...data, _id: _id});
+    const showEditClickHandler = async (_id) => {
+        const data = await userApi.getOne(_id);
+
+        setTempData(data);
         setShowEditModal(true);
     };
     
     const editUserHandler = async (e) => {
         e.preventDefault();
 
+        // My data from the form
         const formData = new FormData(e.target);
 
-        const data = {_id: tempData._id, ...Object.fromEntries(formData.entries())}
-        
-        userApi.editUser(data, data._id)
-        // const user = Object.values(users).find(usr => usr._id === data._id)
-        // const result = {...user, ...data};
+        // Prepare the data for PUT request by updating the changed properties
+        const data = {...tempData, ...Object.fromEntries(formData)}
 
-        console.log(users)
+        // Update the user in the server
+        const result = await userApi.editUser(data, data._id)
+
+        // Update the user in my state to invoke prerender of the component
+       
+        setUsers(state => state.map(user => {
+            if (user._id === tempData._id) {
+                return data;
+            } else {
+                return user;
+            };
+        }));
         setShowEditModal(false);
     }
     
@@ -96,8 +109,7 @@ const UserListTable = () => {
     }
     
     return (
-        <>
-
+        <>  
             {showDelete && <DeleteUser 
                 hideModal={() => setShowDelete(false)}    
                 onDelete={deleteUserHandler}
@@ -226,8 +238,11 @@ const UserListTable = () => {
                                 showEdit={showEditClickHandler}
                                 showDelete={showDeleteClickHandler}
                             />)}
+
                     </tbody>
                 </table>
+
+                {isLoading && <Spinner />}
 
                 <button className="btn-add btn" onClick={showUserClickHandler}>Add new user</button>
             

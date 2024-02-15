@@ -3,7 +3,7 @@ import { useState } from "react";
 const EditUser = ({
     hideModal,
     editUserHandler,
-    data
+    data,
 
 }) => {
     const [userData, setUserData] = useState({
