@@ -908,3 +908,15 @@ ul {
     font-size: 0.9rem;
   }
 }
+
+
+/* My customizations */
+
+.buttons {
+  display: flex;
+  gap: 0.5em;
+}
+
+.refresh {
+  font-size: 1.4em;
+}

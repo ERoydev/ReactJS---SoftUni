@@ -5,3 +5,10 @@ export const formatDate = (isoDate) => {
 
     return formattedDate;
 }
+
+export const criteriaHandler = {
+    'First Name': 'firstName',
+    'Last Name': 'lastName',
+    'Phone': 'phoneNumber',
+    'Email': 'email',
+}

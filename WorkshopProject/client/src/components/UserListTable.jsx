@@ -1,4 +1,5 @@
 import * as userApi from '../services/userApi.js';
+import { criteriaHandler } from './utils/dataUtils.js';
 import { useEffect, useState } from "react";
 
 import UserListItem from "./UserListItem";
@@ -8,9 +9,14 @@ import EditUser from './EditUser.jsx';
 import DeleteUser from './DeleteUser.jsx';
 import Spinner from './Spinner.jsx';
 
-const UserListTable = () => {
+const UserListTable = ({
+    search,
+}) => {
+
     const [users, setUsers] = useState([]);
+    const [usersToShow, setUsersToShow] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [reload, setReload] = useState(false);
 
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -19,6 +25,22 @@ const UserListTable = () => {
     
     const [tempData, setTempData] = useState([]);
 
+    useEffect(() => {
+        if (search.length == 0 || search[0].length == 0) {
+            return;
+        }
+        const [ data, chosenCriteria ] = search;
+        const criteria = criteriaHandler[chosenCriteria]
+        
+        if (!criteria) {
+            setReload(!reload);
+            return;
+        }
+
+        setUsers(state => state.filter(user => user[criteria].startsWith(data)))
+
+
+    }, [search])
 
     useEffect(() => {
         setIsLoading(true);
@@ -27,7 +49,7 @@ const UserListTable = () => {
             .then(res => setUsers(res))
             .catch(err => console.log(err))
             .finally(() => setIsLoading(false));
-    }, []);
+    }, [reload]);
 
     // CREATE
     const showUserClickHandler = () => {
@@ -243,9 +265,14 @@ const UserListTable = () => {
                 </table>
 
                 {isLoading && <Spinner />}
-
-                <button className="btn-add btn" onClick={showUserClickHandler}>Add new user</button>
-            
+                
+                <div className="buttons">
+                    <button className="btn-add btn" onClick={showUserClickHandler}>Add new user</button>
+                                
+                    <button className="btn refresh" title="Reload, show all user in table" onClick={() => setReload((state) => !state)}>
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
             </div>
 
         </>
