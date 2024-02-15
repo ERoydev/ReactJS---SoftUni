@@ -1,6 +1,7 @@
 import * as userApi from '../services/userApi.js';
 import { criteriaHandler } from './utils/dataUtils.js';
 import { useEffect, useState } from "react";
+import Pagination from './Paginations.jsx';
 
 import UserListItem from "./UserListItem";
 import CreateUser from "./CreateUser.jsx";
@@ -8,6 +9,7 @@ import UserDetails from './UserDetails.jsx';
 import EditUser from './EditUser.jsx';
 import DeleteUser from './DeleteUser.jsx';
 import Spinner from './Spinner.jsx';
+import Error from './Error.jsx';
 
 const UserListTable = ({
     search,
@@ -17,6 +19,7 @@ const UserListTable = ({
     const [usersToShow, setUsersToShow] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [reload, setReload] = useState(false);
+    const [showError, setShowError] = useState(false);
 
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -252,7 +255,7 @@ const UserListTable = ({
                     </tr>
                     </thead>
                     <tbody>
-                        {users.map(user =>
+                        {users.map(user => 
                             <UserListItem 
                                 key={user._id} 
                                 {...user} 
@@ -264,14 +267,23 @@ const UserListTable = ({
                     </tbody>
                 </table>
 
+                {showError && <Error />}
+
                 {isLoading && <Spinner />}
+        
                 
-                <div className="buttons">
-                    <button className="btn-add btn" onClick={showUserClickHandler}>Add new user</button>
-                                
-                    <button className="btn refresh" title="Reload, show all user in table" onClick={() => setReload((state) => !state)}>
-                        <i class="fa-solid fa-rotate-right"></i>
-                    </button>
+                <div className="table-footer">
+                    <div className="buttons">
+                        <button className="btn-add btn" onClick={showUserClickHandler}>Add new user</button>
+                                    
+                        <button className="btn refresh" title="Reload, show all user in table" onClick={() => setReload((state) => !state)}>
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div className="pagination-element">
+                        <Pagination />
+                    </div>
                 </div>
             </div>
 
