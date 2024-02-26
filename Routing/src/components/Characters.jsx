@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import CharacterItem from "./CharacterItem";
+import styles from './CharacterItem.module.css'
+
 const baseUrl = 'https://swapi.dev/api';
 
 export default function Characters() {
@@ -11,9 +14,11 @@ export default function Characters() {
     }, [])
 
     return (
-        <ul>
-            {characters.map(character => <li key={character.name}>{character.name}</li>)}
-        </ul>
+        <div className={styles.characterItem}>
+        {characters.map((character, index) =>  
+            <CharacterItem key={character.name} {...character} id={index + 1} />
+        )}
+        </div>
 
     );
 }

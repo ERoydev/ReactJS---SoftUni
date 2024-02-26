@@ -1,0 +1,36 @@
+
+.site {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.site li {
+    border-bottom: 1px solid #ccc;
+    padding: 1em;
+    list-style: none;
+}
+
+.site li:hover {
+    background-color: rgb(197, 197, 197);
+    border-radius: 0.5em;
+}
+
+.title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: rgb(0, 132, 255);
+}
+
+.description {
+    color: #5a5a5a;
+}
+
+.director {
+    font-weight: 600;
+    color: #090;
+}
+
+.container {
+    display: flex;
+    gap: 2em;
+}
