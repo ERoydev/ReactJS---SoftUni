@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CharacterItem from "./CharacterItem";
-import styles from './CharacterItem.module.css'
+import styles from './Character.module.css'
 
 const baseUrl = 'https://swapi.dev/api';
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import styles from './CharacterFilmItem.module.css';
 
 export default function CharacterFilmItem({
@@ -12,9 +12,9 @@ export default function CharacterFilmItem({
             .then(setMovieData)
     }, [])
 
-    console.log(movieData)
     return (
         <div>
+            <h2>Movies</h2>
             {movieData && <ul class={styles.site}>
                 <li>
                     <p className={styles.title}>{movieData.title}</p>

@@ -4,6 +4,10 @@
     margin: 0 auto;
 }
 
+div h2 {
+    text-align: center;
+}
+
 .site li {
     border-bottom: 1px solid #ccc;
     padding: 1em;

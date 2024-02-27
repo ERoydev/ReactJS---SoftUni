@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { normalizeName } from '../utils/characterUtils';
 
 
-export default function CharacterItem ({
+export default function Character ({
     id,
     name,
     hair_color,

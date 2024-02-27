@@ -1,9 +1,17 @@
+import { Link, Routes, Route, Outlet } from 'react-router-dom'
+
 export default function About() {
     return (
         <>
-            <h2>About Page</h2>
+            <h3>About Page</h3>
 
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non numquam velit similique rerum animi ullam. Quis magni hic labore commodi facere impedit voluptatibus esse neque. Similique at obcaecati exercitationem totam molestiae cupiditate, ipsa esse et voluptatibus molestias. Dolore repellendus quisquam dicta! Praesentium beatae maxime doloremque ducimus eos esse accusamus excepturi.</p>
+            <nav>
+                <Link to='us'>About Us</Link>
+                <Link to='missions'>Mission</Link>
+                <Link to='values'>Our Values</Link>
+            </nav>
+
+            <Outlet />
         </>
     );
 }
