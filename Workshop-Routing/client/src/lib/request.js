@@ -26,3 +26,10 @@ export const post = request.bind(null, 'POST');
 export const put = request.bind(null, 'PUT');
 export const remove = request.bind(null, 'DELETE');
 export const patch = request.bind(null, 'PATCH');
+
+// ```
+// This give me the opportunity to call it like that:
+// request.post(url, {'data object here...'}), request.get().....
+
+// This is a request library created from scrap for the project specific needs.
+// ```

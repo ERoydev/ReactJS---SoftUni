@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import * as api from '../../api.js';
-
+import * as api from '../../services/api.js';
+import * as commentService from '../../services/commentService.js'
 
 
 export default function GameDetails() {
     const [game, setGame] = useState([]);
+    const [comments, setComments] = useState([]);
     const { gameId } = useParams();
     
     useEffect(() => {
@@ -14,6 +15,27 @@ export default function GameDetails() {
             .then(data => setGame(data))
             .catch(err => console.log(err))
     }, [gameId])
+
+
+    useEffect(() => {
+        commentService.get(gameId)
+            .then(data => console.log(data))
+    }, [])
+
+    const createCommentClickHandler = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+
+        console.log(formData)
+
+        const newComment = await commentService.create(gameId,
+            formData.get('username'),
+            formData.get('comment')
+        );
+        
+
+    }
 
     return (
         <section id="game-details">
@@ -30,6 +52,14 @@ export default function GameDetails() {
                 {game.summary}
                 </p>
             </div>
+            <article className="create-comment">
+                <label>Add new comment:</label>
+                <form className="form" onSubmit={createCommentClickHandler}>
+                    <input type="text" name="username" placeholder="Username....."/>
+                    <textarea type="text" name="comment" placeholder="Comment......"></textarea>
+                    <input className="btn submit" type="submit" value="Add Comment" />
+                </form>
+            </article>
         </section>
     );
 }

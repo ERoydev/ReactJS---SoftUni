@@ -4,7 +4,7 @@ import Home from "./components/Home/Home";
 import GameCreate from "./components/GameCreate/GameCreate";
 import Login from "./components/Login/Login";
 
-import * as api from '../src/api.js';
+import * as api from '../src/services/api.js';
 
 import { Routes, Route} from 'react-router-dom';
 import Register from "./components/Register/Register";
