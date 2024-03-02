@@ -15,6 +15,11 @@ export default function GameCreate({
         if (!data.title || !data.category || !data.maxLevel) {
             setError('Title, category and maxLevel fields should not be empty.')
         } else {
+            
+            if (!data.imageUrl) {
+                data.imageUrl = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+            }
+
             try {
                 await createGame(data);
                 navigate('/games')
