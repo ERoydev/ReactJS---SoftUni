@@ -27,8 +27,13 @@ footer {
 
 header {
     position: relative;
-    padding: 10px;
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.3em;
 }
+
 
 header h1 {
     display: inline-block;
@@ -40,9 +45,6 @@ header h1 {
 header nav {
     font-size: auto;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    position: absolute;
-    right: 0;
-    bottom: 8px;
 }
 
 header nav>* {
@@ -65,10 +67,13 @@ nav a:hover {
     cursor: pointer;
     color: rgb(82, 133, 139);
     font-weight: bolder;
+    transition: all 0.3s ease-in;
 }
 
 .home:hover {
     color: rgb(82, 133, 139);
+    transition: all 0.3s ease-in;
+
 }
 
 #user,

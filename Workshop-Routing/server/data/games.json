@@ -1,34 +1,34 @@
 {
     "3564027f-adcd-4425-b2c0-1253d2386c0c": {
-        "title": "Test game",
-        "category": "Fantasy",
-        "maxLevel": "112",
-        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/552700/extras/MainCapsule_616x353.png?t=1673947787",
-        "summary": "Fantasy game",
+        "title": "Minecraft",
+        "category": "Survival",
+        "maxLevel": "Unlimited",
+        "imageUrl": "https://image.api.playstation.com/vulcan/img/cfn/11307uYG0CXzRuA9aryByTHYrQLFz-HVQ3VVl7aAysxK15HMpqjkAIcC_R5vdfZt52hAXQNHoYhSuoSq_46_MT_tDBcLu49I.png",
+        "summary": "Build your house to survive from zombies in the night. Explore dungeons and mines for amazing upgrades.",
         "_id": "3564027f-adcd-4425-b2c0-1253d2386c0c"
     },
     "c64db398-91cd-487c-b900-86058c0422f8": {
         "title": "Action game",
         "category": "Action",
         "maxLevel": "40",
-        "imageUrl": "https://www.pcgamesn.com/wp-content/sites/pcgamesn/2022/01/action-adventure-games-tomb-raider.jpg",
+        "imageUrl": "https://c4.wallpaperflare.com/wallpaper/967/828/36/action-armor-crysis-2-video-games-crysis-hd-art-wallpaper-preview.jpg",
         "summary": "Summary here",
         "_id": "c64db398-91cd-487c-b900-86058c0422f8"
     },
     "daf55cd4-9aa1-4b7a-82a9-fbdb74aaa84b": {
-        "title": "asdasd",
-        "category": "asdasd",
-        "maxLevel": "1213",
-        "imageUrl": "https://img.freepik.com/free-vector/joystick-game-sport-technology_138676-2045.jpg?w=2000",
-        "summary": "asdasdasd",
+        "title": "Ninja Storm",
+        "category": "Action",
+        "maxLevel": "85",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/495140/capsule_616x353.jpg?t=1701305352",
+        "summary": "Naruto game. Fight 1v1 with your friends.",
         "_id": "daf55cd4-9aa1-4b7a-82a9-fbdb74aaa84b"
     },
     "18bfdb21-333b-42bd-a32c-c114263f2569": {
-        "title": "adsfasdfasd",
-        "category": "asdfasdf",
-        "maxLevel": "123",
-        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Ultimate_MK3.png/220px-Ultimate_MK3.png",
-        "summary": "MK3",
+        "title": "Fortnite",
+        "category": "Shooter",
+        "maxLevel": "Unlimited",
+        "imageUrl": "https://cdn2.unrealengine.com/social-image-chapter4-s3-3840x2160-d35912cc25ad.jpg",
+        "summary": "Battle Royale. Be the last man standing.",
         "_id": "18bfdb21-333b-42bd-a32c-c114263f2569"
     }
 }
