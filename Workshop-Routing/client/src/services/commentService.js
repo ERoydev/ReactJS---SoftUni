@@ -13,7 +13,12 @@ export const create = async (gameId, username, text) => {
 }
 
 export const getAll = async (gameId) => {
-    const result = await request.get(baseUrl)
+    const query = new URLSearchParams({
+        where: `gameId="${gameId}"`
+    });
 
-    return Object.values(result);
+    const result = await request.get(`${baseUrl}`)
+
+    // TODO: Temporary solution. Can be optimized for better performance.
+    return Object.values(result).filter(comment => comment.gameId === gameId);
 }

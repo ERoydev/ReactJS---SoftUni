@@ -19,8 +19,6 @@ export default function GameDetails() {
             .then(setComments)
     }, [gameId])
 
-    console.log(comments)
-
     const createCommentClickHandler = async (e) => {
         e.preventDefault();
 
