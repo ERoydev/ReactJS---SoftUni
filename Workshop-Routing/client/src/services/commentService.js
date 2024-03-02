@@ -12,8 +12,8 @@ export const create = async (gameId, username, text) => {
     return newComment;
 }
 
-export const get = async (gameId) => {
-    const result = await request.get(`${baseUrl}/${gameId}`)
+export const getAll = async (gameId) => {
+    const result = await request.get(baseUrl)
 
-    return result;
+    return Object.values(result);
 }

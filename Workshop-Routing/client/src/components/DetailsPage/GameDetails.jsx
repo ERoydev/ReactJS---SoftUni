@@ -14,27 +14,22 @@ export default function GameDetails() {
         api.getOne(gameId)
             .then(data => setGame(data))
             .catch(err => console.log(err))
+
+        commentService.getAll(gameId)
+            .then(setComments)
     }, [gameId])
 
-
-    useEffect(() => {
-        commentService.get(gameId)
-            .then(data => console.log(data))
-    }, [])
+    console.log(comments)
 
     const createCommentClickHandler = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
 
-        console.log(formData)
-
         const newComment = await commentService.create(gameId,
             formData.get('username'),
             formData.get('comment')
         );
-        
-
     }
 
     return (
@@ -51,7 +46,23 @@ export default function GameDetails() {
                 <p className="text">
                 {game.summary}
                 </p>
+
+                <div className="details-comments">
+                    <h2>Comments:</h2>
+                    <ul>
+                        {comments.map(({username, text}) => (
+                            <li className="comment">
+                                <p>{username}: {text}</p>
+                            </li>
+                        ))}
+                    </ul>
+
+                    {comments.length === 0 && (
+                        <p className="no-comment">No comments.</p>
+                    )}
+                </div>
             </div>
+
             <article className="create-comment">
                 <label>Add new comment:</label>
                 <form className="form" onSubmit={createCommentClickHandler}>
