@@ -10,6 +10,7 @@ import { Routes, Route} from 'react-router-dom';
 import Register from "./components/Register/Register";
 
 import { useEffect, useState } from "react";
+import GameDetails from "./components/DetailsPage/GameDetails.jsx";
 
 function App() {
   const [gameList, setGameList] = useState([]);
@@ -41,6 +42,7 @@ function App() {
             <Route path='games/create' element={<GameCreate createGame={createGameHandler}/>}></Route>
             <Route path='login' element={<Login />}></Route>
             <Route path='/register' element={<Register />}></Route>
+            <Route path='/games/:gameId/details' element={<GameDetails />}></Route>
         </Routes>
       </div>
     </>

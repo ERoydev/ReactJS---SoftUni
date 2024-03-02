@@ -3,6 +3,8 @@ import GameListItem from "./GameListItem";
 export default function GameList({
     games,
 }) {
+
+    
     return (
         <section id="catalog-page">
             <h1>All Games</h1>

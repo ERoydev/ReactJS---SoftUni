@@ -14,3 +14,7 @@ export const createGame = async (data) => {
 
     return result;   
 }
+
+export const getOne = async () => {
+    
+}

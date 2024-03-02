@@ -75,10 +75,10 @@
     margin-left: 20px;
 }
 
-/* .card:hover {
+.card:hover {
     background-color: rgba(0, 0, 0, 0.2);
     color: #fff;
-} */
+}
 
 .allGames.card:hover {
 
@@ -86,7 +86,6 @@
         color: #fff;
         transition: all 0.3s ease-in;
     }
-    background-color: rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 30px 0px;
     color: rgb(204, 144, 131);
 }
