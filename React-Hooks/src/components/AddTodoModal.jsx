@@ -3,18 +3,18 @@ import { useRef, useState } from 'react';
 
 import { useForm } from '../hooks/useForm';
 
-export default function AddTodoModal() {
+export default function AddTodoModal({
+    onTodoAddSubmit,
+    show,
+    hideModal,
+}) {
     
-    const {formValues, onChangeHandler, onSubmit} = useForm({
-        text: ''
-    }, (values) => {
-        console.log(values)
-    })
+    const {formValues, onChangeHandler, onSubmit} = useForm({ text: '' }, onTodoAddSubmit);
 
 
     return (
-        <Modal show={true}>
-            <Modal.Header closeButton>
+        <Modal show={show}>
+            <Modal.Header closeButton onHide={hideModal}>
             <Modal.Title>Add Todo</Modal.Title>
             </Modal.Header>
 
@@ -29,7 +29,7 @@ export default function AddTodoModal() {
                         Submit
                     </Button>
 
-                    <Button variant="secondary">Close</Button>
+                    <Button variant="secondary" onClick={hideModal}>Close</Button>
                 </Form>
             </Modal.Body>
 
