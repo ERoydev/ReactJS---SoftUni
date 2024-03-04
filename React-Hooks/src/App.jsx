@@ -1,7 +1,9 @@
-import Navigation from "./components/Navigation"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Navigation from "./components/Navigation"
 import TodoList from "./components/TodoList";
 import { useEffect, useState } from "react";
+import AddTodoModal from './components/AddTodoModal';
+
 
 const baseUrl = 'http://localhost:3030/jsonstore/todos';
 
@@ -17,11 +19,14 @@ function App() {
       .catch(err => console.log(err))
   }, []);
 
-
   return (
     <>
       <Navigation />
+
       <TodoList todos={todos} />
+
+      <AddTodoModal />
+      
     </>
   )
 }
