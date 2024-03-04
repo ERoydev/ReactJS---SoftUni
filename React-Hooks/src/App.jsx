@@ -44,11 +44,22 @@ function App() {
     setShowAddTodo(false);
   }
 
+  const onTodoDeleteClick = async (todoId) => {
+    await fetch(`${baseUrl}/${todoId}`, {method: "DELETE"});
+
+    setTodos(state => state.filter(x => x._id !== todoId));
+  }
+
   return (
     <div>
       <Navigation />
 
-      <TodoList todos={todos} onTodoAddClick={onTodoAddClick}/>
+      <TodoList
+        todos={todos}
+        onTodoAddClick={onTodoAddClick}
+        onTodoDeleteClick={onTodoDeleteClick}
+        
+        />
 
       <AddTodoModal show={showAddTodo} hideModal={hideTodoModal} onTodoAddSubmit={onTodoAddSubmit}/>
     </div>

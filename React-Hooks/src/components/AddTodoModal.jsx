@@ -14,7 +14,7 @@ export default function AddTodoModal({
 
     return (
         <Modal show={show}>
-            <Modal.Header closeButton onHide={hideModal}>
+            <Modal.Header closeButton onHide={hideModal} onBlur={hideModal}>
             <Modal.Title>Add Todo</Modal.Title>
             </Modal.Header>
 
