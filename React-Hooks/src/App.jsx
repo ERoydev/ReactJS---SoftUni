@@ -4,6 +4,8 @@ import TodoList from "./components/TodoList";
 import { useEffect, useState } from "react";
 import AddTodoModal from './components/AddTodoModal';
 
+import { TodoContext } from './contexts/TodoContext.js';
+
 
 const baseUrl = 'http://localhost:3030/jsonstore/todos';
 
@@ -50,19 +52,25 @@ function App() {
     setTodos(state => state.filter(x => x._id !== todoId));
   }
 
+  const contextValue = {
+    onTodoDeleteClick
+  }
+
   return (
-    <div>
-      <Navigation />
+    <TodoContext.Provider value={contextValue}>
+      
+      <div>
+        <Navigation />
+        <TodoList
+          todos={todos}
+          onTodoAddClick={onTodoAddClick}
 
-      <TodoList
-        todos={todos}
-        onTodoAddClick={onTodoAddClick}
-        onTodoDeleteClick={onTodoDeleteClick}
-        
-        />
+          />
 
-      <AddTodoModal show={showAddTodo} hideModal={hideTodoModal} onTodoAddSubmit={onTodoAddSubmit}/>
-    </div>
+        <AddTodoModal show={showAddTodo} hideModal={hideTodoModal} onTodoAddSubmit={onTodoAddSubmit}/>
+      </div>
+
+    </TodoContext.Provider>
   )
 }
 
