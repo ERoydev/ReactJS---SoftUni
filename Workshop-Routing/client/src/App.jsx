@@ -31,6 +31,12 @@ function App() {
       })
   }
 
+  const [auth, setAuth] = useState({});
+
+  const loginSubmitHandler = (values) => {
+    console.log(values)
+  }
+
   return (
     <>
       <Header />
@@ -40,7 +46,7 @@ function App() {
             <Route path="/" element={<Home games={gameList}/>}></Route>
             <Route path='/games' element={<GameList games={gameList}/>}></Route>
             <Route path='games/create' element={<GameCreate createGame={createGameHandler}/>}></Route>
-            <Route path='login' element={<Login />}></Route>
+            <Route path='login' element={<Login loginSubmitHandler={loginSubmitHandler}/>}></Route>
             <Route path='/register' element={<Register />}></Route>
             <Route path='/games/:gameId/details' element={<GameDetails />}></Route>
         </Routes>
