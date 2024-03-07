@@ -1,20 +1,24 @@
+import { Routes, Route, useNavigate} from 'react-router-dom';
+import { useEffect, useState } from "react";
+
+import * as api from '../src/services/api.js';
+import * as authService from './services/authService.js';
+import AuthContext from "./contexts/authContext.js";
+import Path from './Paths.js';
+
 import GameList from "./components/GameList/GameList";
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import GameCreate from "./components/GameCreate/GameCreate";
 import Login from "./components/Login/Login";
-
-import * as api from '../src/services/api.js';
-
-import { Routes, Route} from 'react-router-dom';
 import Register from "./components/Register/Register";
-
-import { useEffect, useState } from "react";
 import GameDetails from "./components/DetailsPage/GameDetails.jsx";
-import AuthContext from "./contexts/authContext.js";
+
 
 function App() {
+  const navigate = useNavigate();
   const [gameList, setGameList] = useState([]);
+  const [auth, setAuth] = useState({});
 
   useEffect(() => {
     api.getAllGames()
@@ -32,16 +36,22 @@ function App() {
       })
   }
 
-  const [auth, setAuth] = useState({});
 
-  const loginSubmitHandler = (values) => {
-    console.log(values)
+  const loginSubmitHandler = async (values) => {
+    const result = await authService.login(values.email, values.password);
+
+    if (result.code) {
+      console.log('Error with login')
+    } else {
+      setAuth(result);
+  
+      navigate(Path.Home)
+    }
   }
 
   return (
     <>
       <AuthContext.Provider value={{ loginSubmitHandler  }}>
-
         <Header />
         <div id='box'>
 
