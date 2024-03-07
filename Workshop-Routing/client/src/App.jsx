@@ -13,12 +13,18 @@ import GameCreate from "./components/GameCreate/GameCreate";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import GameDetails from "./components/DetailsPage/GameDetails.jsx";
+import Logout from './components/Logout/Logout.jsx';
 
 
 function App() {
   const navigate = useNavigate();
   const [gameList, setGameList] = useState([]);
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useState(() => {
+    // Kogato refreshna stranicata tokena ostava, za tova kogato se renderva za purvi put shte iztrie accessTokena
+    localStorage.removeItem('accessToken');
+
+    return {};
+  });
 
   useEffect(() => {
     api.getAllGames()
@@ -43,7 +49,7 @@ function App() {
       console.log('Error with login')
     } else {
       setAuth(result);
-  
+      localStorage.setItem('accessToken', result.accessToken);
       navigate(Path.Home)
     }
   }
@@ -55,17 +61,23 @@ function App() {
       console.log("Error with Register")
     } else {
       setAuth(result);
-
+      localStorage.setItem('accessToken', result.accessToken);
       navigate(Path.Home);
     }
+  }
+
+  const logoutHandler = () => {
+    setAuth({});
+    localStorage.removeItem('accessToken');
   }
 
   const values = {
     registerSubmitHandler,
     loginSubmitHandler,
+    logoutHandler,
     username: auth.username || auth.email,
     email: auth.email,
-    isAuthenticated: !!auth.email,
+    isAuthenticated: !!auth.accessToken,
     
   }
 
@@ -82,6 +94,7 @@ function App() {
               <Route path={Path.Login} element={<Login />}></Route>
               <Route path={Path.Register} element={<Register />}></Route>
               <Route path={Path.GameDetails} element={<GameDetails />}></Route>
+              <Route path={Path.Logout} element={<Logout />}></Route>
           </Routes>
         </div>
       </AuthContext.Provider>
