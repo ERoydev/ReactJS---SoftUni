@@ -11,6 +11,7 @@ import Register from "./components/Register/Register";
 
 import { useEffect, useState } from "react";
 import GameDetails from "./components/DetailsPage/GameDetails.jsx";
+import AuthContext from "./contexts/authContext.js";
 
 function App() {
   const [gameList, setGameList] = useState([]);
@@ -39,18 +40,21 @@ function App() {
 
   return (
     <>
-      <Header />
-      <div id='box'>
+      <AuthContext.Provider value={{ loginSubmitHandler  }}>
 
-        <Routes>
-            <Route path="/" element={<Home games={gameList}/>}></Route>
-            <Route path='/games' element={<GameList games={gameList}/>}></Route>
-            <Route path='games/create' element={<GameCreate createGame={createGameHandler}/>}></Route>
-            <Route path='login' element={<Login loginSubmitHandler={loginSubmitHandler}/>}></Route>
-            <Route path='/register' element={<Register />}></Route>
-            <Route path='/games/:gameId/details' element={<GameDetails />}></Route>
-        </Routes>
-      </div>
+        <Header />
+        <div id='box'>
+
+          <Routes>
+              <Route path="/" element={<Home games={gameList}/>}></Route>
+              <Route path='/games' element={<GameList games={gameList}/>}></Route>
+              <Route path='games/create' element={<GameCreate createGame={createGameHandler}/>}></Route>
+              <Route path='login' element={<Login loginSubmitHandler={loginSubmitHandler}/>}></Route>
+              <Route path='/register' element={<Register />}></Route>
+              <Route path='/games/:gameId/details' element={<GameDetails />}></Route>
+          </Routes>
+        </div>
+      </AuthContext.Provider>
     </>
   )
 }
