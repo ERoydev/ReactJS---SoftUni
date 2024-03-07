@@ -29,7 +29,9 @@ function App() {
   useEffect(() => {
     api.getAllGames()
       .then(data => setGameList(data))
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error.message)
+      })
   }, [])
 
   const createGameHandler = (data) => {

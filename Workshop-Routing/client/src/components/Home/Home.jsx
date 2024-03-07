@@ -14,7 +14,7 @@ export default function Home({
         <div id="home-page">
             <h1>Latest Games</h1>
             {/* Display div: with information about every game (if any) */}
-            {games ? games.map(game => <GameItem key={game._id} {...game} />) : <p className="no-articles">No games yet</p>}
+            {games.length > 0 ? games.map(game => <GameItem key={game._id} {...game} />) : <p className="no-articles">No games yet</p>}
         </div>
     </section>
 
