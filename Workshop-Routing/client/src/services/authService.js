@@ -14,3 +14,14 @@ export const login = async (email, password) => {
         return 
     }
 }
+
+export const register = async (email, password) => {
+
+    const result = await request.post(`${baseUrl}/register`, {
+        email,
+        password,
+    });
+
+    return result;
+
+}
