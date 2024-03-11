@@ -1,9 +1,10 @@
 import GameItem from "./GameItem";
+import { useContext } from "react";
+import GameContext from "../../contexts/gameContext";
 
-export default function Home({
-    games,
-}) {
-    
+export default function Home() {
+    const { gameList } = useContext(GameContext);
+
     return(
     <section id="welcome-world">
         <div className="welcome-message">
@@ -14,7 +15,7 @@ export default function Home({
         <div id="home-page">
             <h1>Latest Games</h1>
             {/* Display div: with information about every game (if any) */}
-            {games.length > 0 ? games.map(game => <GameItem key={game._id} {...game} />) : <p className="no-articles">No games yet</p>}
+            {gameList.length > 0 ? gameList.map(game => <GameItem key={game._id} {...game} />) : <p className="no-articles">No games yet</p>}
         </div>
     </section>
 

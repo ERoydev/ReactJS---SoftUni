@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import GameContext from "../../contexts/gameContext";
 
-export default function GameCreate({
-    createGame,
-}) {
+export default function GameCreate() {
+
+    const { createGameHandler } = useContext(GameContext);
     const navigate = useNavigate();
     const [error, setError] = useState('');
 
@@ -21,14 +22,12 @@ export default function GameCreate({
             }
 
             try {
-                await createGame(data);
+                await createGameHandler(data);
                 navigate('/games')
             } catch (err) {
                 setError('Cannot create a new game.')
             }      
         }
-        
- 
     }
 
     return (
