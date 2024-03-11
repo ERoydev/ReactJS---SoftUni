@@ -6,7 +6,7 @@ import Path from "../../Paths";
 
 export default function Logout() {
     const navigate = useNavigate();
-    const { logoutHandler } = useContext(AuthContext).values;
+    const { logoutHandler } = useContext(AuthContext);
 
     useEffect(() => {
         authService.logout()

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import * as api from '../src/services/api.js';
 import * as authService from './services/authService.js';
-import AuthContext from "./contexts/authContext.js";
+import { AuthProvider } from './contexts/authContext.jsx';
 import Path from './Paths.js';
 
 import GameList from "./components/GameList/GameList";
@@ -33,6 +33,8 @@ function App() {
         console.log(error.message)
       })
   }, [])
+
+  console.log(gameList)
 
   const createGameHandler = (data) => {
     api.createGame(data)
@@ -85,7 +87,7 @@ function App() {
 
   return (
     <>
-      <AuthContext.Provider value={{ values }}>
+      <AuthProvider value={ values }>
         <Header />
         <div id='box'>
 
@@ -99,7 +101,7 @@ function App() {
               <Route path={Path.Logout} element={<Logout />}></Route>
           </Routes>
         </div>
-      </AuthContext.Provider>
+      </AuthProvider>
     </>
   )
 }

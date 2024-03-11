@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 
 import * as api from '../../services/api.js';
 import * as commentService from '../../services/commentService.js'
-import AuthContext from "../../contexts/authContext.js";
+import AuthContext from "../../contexts/authContext.jsx";
 
 
 export default function GameDetails() {
-    const { email } = useContext(AuthContext).values;
+    const { email } = useContext(AuthContext);
     const [game, setGame] = useState([]);
     const [comments, setComments] = useState([]);
     const { gameId } = useParams();
