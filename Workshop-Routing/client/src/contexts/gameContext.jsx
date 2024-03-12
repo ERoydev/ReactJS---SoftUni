@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import * as api from '../services/api';
+import { useContext } from "react";
+import AuthContext from "./authContext";
 
 const GameContext = createContext()
 
@@ -10,6 +12,7 @@ export const GameProvider = ({
     children,
 }) => {
     const [gameList, setGameList] = useState([]);
+    const {userId} = useContext(AuthContext);
     useEffect(() => {
         api.getAllGames()
             .then(data => setGameList(Object.values(data)))
@@ -19,7 +22,7 @@ export const GameProvider = ({
     }, [])
     
     const createGameHandler = (data) => {
-        api.createGame(data)
+        api.createGame({...data, ownerId: userId})
             .then(result => {
                 setGameList(state => [...state, result])
             })

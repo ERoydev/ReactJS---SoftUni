@@ -10,7 +10,7 @@ export const getAll = async (gameId) => {
 
     const result = await request.get(`${baseUrl}?${query}`)
 
-    // TODO: Temporary solution. Can be optimized for better performance.
+    // TODO: Temporary solution.This bellow can be optimized for a better performance.
     // return result.filter(comment => comment.gameId === gameId);
     return result;
 }

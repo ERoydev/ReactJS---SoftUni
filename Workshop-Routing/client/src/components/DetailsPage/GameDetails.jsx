@@ -1,5 +1,5 @@
 import { useContext, useEffect, useReducer, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import * as api from '../../services/api.js';
 import * as commentService from '../../services/commentService.js'
@@ -9,21 +9,28 @@ const reducer = (state, action) => {
     switch (action?.type) {
         case 'GET_ALL_GAMES':
             return [...action.payload];
+        case 'ADD_COMMENT':
+            // Starite komentari i slagam noviq komentar (dobavqm go)
+            return [...state, action.payload];
+        case 'EDIT_COMMENT':
+            return state.map(c => c._id === action.payload._id ? {...c, text: action.payload.text } : c)
         default:
             return state;
     }
 }
 
 export default function GameDetails() {
-    const { email } = useContext(AuthContext);
+    const { email, userId } = useContext(AuthContext);
     const [game, setGame] = useState([]);
     // const [comments, setComments] = useState([]);
     const { gameId } = useParams();
     const [comments, dispatch] = useReducer(reducer, {});
-    
+
     useEffect(() => {
         api.getOne(gameId)
-            .then(data => setGame(data))
+            .then(data => {
+                setGame(data)
+            })
             .catch(err => console.log(err))
 
         commentService.getAll(gameId)
@@ -35,6 +42,7 @@ export default function GameDetails() {
             })
     }, [gameId])
 
+
     const createCommentClickHandler = async (e) => {
         e.preventDefault();
 
@@ -45,7 +53,12 @@ export default function GameDetails() {
             formData.get('comment')
         );
 
-        setComments(state => [...state, {...newComment, author: { email }}])
+        newComment.author = email;
+
+        dispatch({
+            type: 'ADD_COMMENT',
+            payload: newComment
+        })
     }
 
     return (
@@ -67,7 +80,7 @@ export default function GameDetails() {
                     <h2>Comments:</h2>
                     <ul>
                         {/* Destructuriram ownera na email */}
-                        {comments.map(({_id, text, owner: { email }}) => (
+                        {comments.length > 0 && comments.map(({_id, text}) => (
                             <li key={_id} className="comment">
                                 <p>{email}: {text}</p>
                             </li>
@@ -78,6 +91,14 @@ export default function GameDetails() {
                         <p className="no-comment">No comments.</p>
                     )}
                 </div>
+
+                {userId === game.ownerId && (
+                    <div className="buttons">
+                        <Link to="#" className="button">Edit</Link>
+                        <Link to="#" className="button">Delete</Link>
+                    </div>
+                )}
+
             </div>
 
             <article className="create-comment">
