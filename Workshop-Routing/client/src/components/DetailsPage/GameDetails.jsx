@@ -4,6 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import * as api from '../../services/api.js';
 import * as commentService from '../../services/commentService.js'
 import AuthContext from "../../contexts/authContext.jsx";
+import Path from "../../Paths.js";
+import { pathToUrl } from "../../utils/pathUtils.js";
 
 const reducer = (state, action) => {
     switch (action?.type) {
@@ -94,8 +96,8 @@ export default function GameDetails() {
 
                 {userId === game.ownerId && (
                     <div className="buttons">
-                        <Link to="#" className="button">Edit</Link>
-                        <Link to="#" className="button">Delete</Link>
+                        <Link to={pathToUrl(Path.GameEdit, { gameId }) } className="button">Edit</Link>
+                        <Link to="/games/:gameId/delete" className="button">Delete</Link>
                     </div>
                 )}
 
