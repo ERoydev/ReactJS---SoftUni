@@ -8,13 +8,14 @@ const buildOptions = (data) => {
         };
     }
 
-    const token = localStorage.getItem('accessToken');
-
-    if (token) {
+    const token = localStorage.getItem('auth');
+    
+    if (token !== '{}') {
+        const accessToken = JSON.parse(token).accessToken;
         options.headers = {
             // Ako ima stari headers kakto po gore da ne gi prezapisva, ami prosto da dobavi moq authorization token
             ...options.headers, 
-            'X-Authorization': token
+            'X-Authorization': accessToken
         }
     }
 

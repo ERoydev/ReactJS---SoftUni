@@ -17,6 +17,7 @@ export const AuthProvider = ({
 
     const loginSubmitHandler = async (values) => {
         const result = await authService.login(values.email, values.password);
+
         if (result.code) {
         console.log('Error with login')
         } else {

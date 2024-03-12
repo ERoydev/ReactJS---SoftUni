@@ -12,20 +12,20 @@ export const GameProvider = ({
     const [gameList, setGameList] = useState([]);
     useEffect(() => {
         api.getAllGames()
-        .then(data => setGameList(data))
-        .catch(error => {
-            console.log(error.message)
-        })
+            .then(data => setGameList(Object.values(data)))
+            .catch(error => {
+                console.log(error.message)
+            })
     }, [])
     
     const createGameHandler = (data) => {
         api.createGame(data)
-        .then(result => {
-            setGameList(state => [...state, result])
-        })
-        .catch(err => {
-            throw new Error("create game request failed")
-        })
+            .then(result => {
+                setGameList(state => [...state, result])
+            })
+            .catch(err => {
+                throw new Error("create game request failed")
+            })
     }
 
     const values = {
