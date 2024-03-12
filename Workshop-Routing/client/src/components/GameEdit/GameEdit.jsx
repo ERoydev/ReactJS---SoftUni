@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import * as api from '../../services/api';
@@ -6,7 +6,13 @@ import * as api from '../../services/api';
 export default function GameEdit() {
     const navigate = useNavigate();
     const { gameId } = useParams();
-    const [game, setGame] = useState({});
+    const [game, setGame] = useState({
+        title: '',
+        category: '',
+        maxLevel: '',
+        imageUrl: '',
+        summary: '',
+    });
 
     useEffect(() => {
         api.getOne(gameId)
@@ -14,22 +20,29 @@ export default function GameEdit() {
                 setGame(result)
             })
     }, [gameId])
-
-    const editGameSubmitHandler = async (values) => {
-
+        
+    const editGameSubmitHandler = async (e) => {
+        e.preventDefault();
+        
+        try {
+            await api.editGame(gameId, game);
+            
+            navigate('/games');
+        } catch (err) {
+            console.log(err)
+        }
     }
-
-    const { values, onChange, onSubmit } = useForm(editGameSubmitHandler, {
-        title: '',
-        category: '',
-        maxLevel: '',
-        imageUrl: '',
-        summary: '',
-    })
-
+        
+    const onChange = (e) => {
+        setGame(state => ({
+            ...state,
+            [e.target.name]: e.target.value
+        }))
+    }
     return (
+        
         <section id="create-page" className="auth">
-            <form id="create" onSubmit={onSubmit}>
+            <form id="create" onSubmit={editGameSubmitHandler}>
                 <div className="container">
                     <h1>Edit Game</h1>
                     <label htmlFor="leg-title">Legendary title:</label>
@@ -38,7 +51,7 @@ export default function GameEdit() {
                         id="title"
                         name="title"
                         placeholder="Enter game title..."
-                        value={values.title}
+                        value={game.title}
                         onChange={onChange}
                     />
 
@@ -48,7 +61,7 @@ export default function GameEdit() {
                         id="category"
                         name="category"
                         placeholder="Enter game category..."
-                        value={values.category}
+                        value={game.category}
                         onChange={onChange}
                     />
 
@@ -59,7 +72,7 @@ export default function GameEdit() {
                         name="maxLevel"
                         min={1}
                         placeholder={1}
-                        value={values.maxLevel}
+                        value={game.maxLevel}
                         onChange={onChange}
                     />
 
@@ -69,12 +82,12 @@ export default function GameEdit() {
                         id="imageUrl"
                         name="imageUrl"
                         placeholder="Upload a photo..."
-                        value={values.imageUrl}
+                        value={game.imageUrl}
                         onChange={onChange}
                     />
 
                     <label htmlFor="summary">Summary:</label>
-                    <textarea name="summary" id="summary" value={values.summary} onChange={onChange} />
+                    <textarea name="summary" id="summary" value={game.summary} onChange={onChange} />
                     <input className="btn submit" type="submit" value='Edit Game' />
                 </div>
             </form>

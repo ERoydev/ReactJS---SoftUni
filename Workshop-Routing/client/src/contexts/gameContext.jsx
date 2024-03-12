@@ -13,6 +13,7 @@ export const GameProvider = ({
 }) => {
     const [gameList, setGameList] = useState([]);
     const {userId} = useContext(AuthContext);
+    
     useEffect(() => {
         api.getAllGames()
             .then(data => setGameList(Object.values(data)))
