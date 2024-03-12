@@ -1,9 +1,7 @@
 export default function GameItem({
     title,
-    category,
-    maxLevel,
     imageUrl,
-    summary,
+
 }) {
     return (
         <div className="game card">

@@ -1,6 +1,8 @@
 import { createContext, useState } from "react";
 import * as authService from '../services/authService';
 import { useNavigate } from "react-router-dom";
+import usePersistedState from "../hooks/usePersistedState";
+import Path from "../Paths";
 
 const AuthContext = createContext();
  
@@ -11,12 +13,7 @@ export const AuthProvider = ({
     children, 
 }) => {
     const navigate = useNavigate();
-    const [auth, setAuth] = useState(() => {
-        // Kogato refreshna stranicata tokena ostava, za tova kogato se renderva za purvi put shte iztrie accessTokena
-        localStorage.removeItem('accessToken');
-        return {};
-    });
-    
+    const [auth, setAuth] = usePersistedState('auth', {});
 
     const loginSubmitHandler = async (values) => {
         const result = await authService.login(values.email, values.password);

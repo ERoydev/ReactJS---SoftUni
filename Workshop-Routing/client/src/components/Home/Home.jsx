@@ -21,3 +21,10 @@ export default function Home() {
 
     );
 }
+
+// const EnhancedHome = withAuth(Home);
+
+// export default Home;
+
+// Taka se pravi na edin red
+// export default withAuth(Home);
