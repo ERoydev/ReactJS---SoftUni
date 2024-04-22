@@ -1,5 +1,5 @@
 import { useContext, useEffect, useReducer, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import * as api from '../../services/api.js';
 import * as commentService from '../../services/commentService.js'
@@ -27,6 +27,7 @@ export default function GameDetails() {
     // const [comments, setComments] = useState([]);
     const { gameId } = useParams();
     const [comments, dispatch] = useReducer(reducer, {});
+    const navigate = useNavigate();
 
     useEffect(() => {
         api.getOne(gameId)
@@ -61,6 +62,16 @@ export default function GameDetails() {
             type: 'ADD_COMMENT',
             payload: newComment
         })
+    }
+
+    const onDeleteButtonClick = async (e) => {
+        const hasConfirmed = confirm(`Are you sure you want to delete ${game.title}`)
+
+        if (hasConfirmed) {
+            await api.remove(gameId);
+
+            navigate('/games');
+        }
     }
     
     return (
@@ -97,7 +108,7 @@ export default function GameDetails() {
                 {userId === game.ownerId && (
                     <div className="buttons">
                         <Link to={pathToUrl(Path.GameEdit, { gameId }) } className="button">Edit</Link>
-                        <Link to={pathToUrl(Path.GameDelete, { gameId}) } className="button">Delete</Link>
+                        <button className="button" onClick={onDeleteButtonClick}>Delete</button>                    
                     </div>
                 )}
 

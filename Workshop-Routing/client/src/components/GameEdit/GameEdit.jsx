@@ -23,7 +23,7 @@ export default function GameEdit() {
         
     const editGameSubmitHandler = async (e) => {
         e.preventDefault();
-        
+    
         try {
             await api.editGame(gameId, game);
             
