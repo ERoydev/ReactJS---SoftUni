@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
+import Path from "../../Paths";
+import { pathToUrl } from "../../utils/pathUtils";
 
 export default function GameItem({
+    _id,
     title,
     imageUrl,
 
@@ -21,7 +24,7 @@ export default function GameItem({
                 </div>
 
                 <div className="data-buttons">
-                    <Link to={`/games/`} className="btn details-btn">
+                    <Link to={pathToUrl(Path.GameDetails, {gameId: _id})} className="btn details-btn">
                     Details
                     </Link>
                 </div>
