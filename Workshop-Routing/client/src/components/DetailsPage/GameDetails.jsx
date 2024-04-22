@@ -63,6 +63,10 @@ export default function GameDetails() {
         })
     }
 
+    if (Math.random() < 0.5) {
+        throw new Error('math random error')
+    }
+
     return (
         <section id="game-details">
             <h1>Game Details</h1>
