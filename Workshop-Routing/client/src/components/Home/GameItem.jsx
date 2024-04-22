@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export default function GameItem({
     title,
     imageUrl,
@@ -19,9 +21,9 @@ export default function GameItem({
                 </div>
 
                 <div className="data-buttons">
-                    <a href="#" className="btn details-btn">
+                    <Link to={`/games/`} className="btn details-btn">
                     Details
-                    </a>
+                    </Link>
                 </div>
             </div>
     );

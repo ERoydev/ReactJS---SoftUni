@@ -62,11 +62,7 @@ export default function GameDetails() {
             payload: newComment
         })
     }
-
-    if (Math.random() < 0.5) {
-        throw new Error('math random error')
-    }
-
+    
     return (
         <section id="game-details">
             <h1>Game Details</h1>
@@ -101,7 +97,7 @@ export default function GameDetails() {
                 {userId === game.ownerId && (
                     <div className="buttons">
                         <Link to={pathToUrl(Path.GameEdit, { gameId }) } className="button">Edit</Link>
-                        <Link to="/games/:gameId/delete" className="button">Delete</Link>
+                        <Link to={pathToUrl(Path.GameDelete, { gameId}) } className="button">Delete</Link>
                     </div>
                 )}
 
