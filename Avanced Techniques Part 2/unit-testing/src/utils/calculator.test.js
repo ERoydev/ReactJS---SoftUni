@@ -16,8 +16,18 @@ describe('Calculator Sum', () => {
     test('Should return negative number when adding negative numbers', () => {
         expect(calucator.sum(-1, -2)).toBe(-3);
     });
+
+    test('Use undefines as an argument should return NaN', () => {
+        expect(calucator.sum(undefined, 2)).toBe(NaN);
+    })
+
+    test('Use undefines as an argument should return NaN', () => {
+        expect(calucator.sum('1', 2)).toBe(3);
+    })
 });
 
 describe('Calculator Divide', () => {
-
+    test('Should throw error when divide by zero', () => {
+        expect(() => calucator.divide(2, 0)).toThrow();
+    })
 })
