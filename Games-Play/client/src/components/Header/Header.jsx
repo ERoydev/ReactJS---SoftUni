@@ -10,7 +10,7 @@ export default function Header() {
         {/* Navigation */}
         <h1>
             <Link className="home" to="/">
-            GamesPlay
+            Game Zone
             </Link>
         </h1>
         
